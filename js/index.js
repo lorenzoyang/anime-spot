@@ -8,7 +8,7 @@ const radioBtns = {
 };
 
 for (const key in radioBtns) {
-    radioBtns[key].addEventListener("change", loadAnimesImages);
+    radioBtns[key].addEventListener("change", loadAnimeImagesByRadioSelection);
 }
 
 let airingAnimeList = [];
@@ -16,48 +16,49 @@ let upcomingAnimeList = [];
 let favoriteAnimeList = [];
 let bypopularityAnimeList = [];
 
-async function loadAnimesImages() {
-    if (radioBtns.airing.checked) {
-        if (airingAnimeList.length === 0) {
-            airingAnimeList = await AnimeApi.getTopAnimes({ filter: "airing" });
-            fillAnimeImages(airingAnimeList);
-        } else {
-            fillAnimeImages(airingAnimeList);
-        }
-    } else if (radioBtns.upcoming.checked) {
-        if (upcomingAnimeList.length === 0) {
-            upcomingAnimeList = await AnimeApi.getTopAnimes({
-                filter: "upcoming",
-            });
-            fillAnimeImages(upcomingAnimeList);
-        } else {
-            fillAnimeImages(upcomingAnimeList);
-        }
-    } else if (radioBtns.favorite.checked) {
-        if (favoriteAnimeList.length === 0) {
-            favoriteAnimeList = await AnimeApi.getTopAnimes({
-                filter: "favorite",
-            });
-            fillAnimeImages(favoriteAnimeList);
-        } else {
-            fillAnimeImages(favoriteAnimeList);
-        }
-    } else {
-        if (bypopularityAnimeList.length === 0) {
-            bypopularityAnimeList = await AnimeApi.getTopAnimes({
-                filter: "bypopularity",
-            });
-            fillAnimeImages(bypopularityAnimeList);
-        } else {
-            fillAnimeImages(bypopularityAnimeList);
-        }
+async function loadAnimeImagesByRadioSelection() {
+    switch (true) {
+        case radioBtns.airing.checked:
+            if (airingAnimeList.length === 0) {
+                airingAnimeList = await AnimeApi.getTopAnimes({
+                    filter: "airing",
+                });
+            }
+            populateAnimeImageCards(airingAnimeList);
+            break;
+        case radioBtns.upcoming.checked:
+            if (upcomingAnimeList.length === 0) {
+                upcomingAnimeList = await AnimeApi.getTopAnimes({
+                    filter: "upcoming",
+                });
+            }
+            populateAnimeImageCards(upcomingAnimeList);
+            break;
+        case radioBtns.favorite.checked:
+            if (favoriteAnimeList.length === 0) {
+                favoriteAnimeList = await AnimeApi.getTopAnimes({
+                    filter: "favorite",
+                });
+            }
+            populateAnimeImageCards(favoriteAnimeList);
+            break;
+        case radioBtns.bypopularity.checked:
+            if (bypopularityAnimeList.length === 0) {
+                bypopularityAnimeList = await AnimeApi.getTopAnimes({
+                    filter: "bypopularity",
+                });
+            }
+            populateAnimeImageCards(bypopularityAnimeList);
+            break;
+        default:
+            throw new Error("Invalid radio button selection");
     }
 }
 
-function createAnimeImageTemplate(quantity) {
+function generateAnimeImageCards(cardCount) {
     const animeListContainer = document.querySelector("#anime-list-container");
 
-    for (let i = 0; i < quantity; i++) {
+    for (let i = 0; i < cardCount; i++) {
         const parentContainer = document.createElement("div");
         parentContainer.classList.add("col");
 
@@ -73,7 +74,7 @@ function createAnimeImageTemplate(quantity) {
     }
 }
 
-function fillAnimeImages(animeList) {
+function populateAnimeImageCards(animeList) {
     const animeListContainer = document.querySelector("#anime-list-container");
     const animeCards = animeListContainer.querySelectorAll(".card");
 
@@ -89,5 +90,5 @@ function fillAnimeImages(animeList) {
     });
 }
 
-window.addEventListener("load", createAnimeImageTemplate(AnimeApi.maxQuantity));
-window.addEventListener("load", loadAnimesImages);
+window.addEventListener("load", generateAnimeImageCards(AnimeApi.maxQuantity));
+window.addEventListener("load", loadAnimeImagesByRadioSelection);

@@ -1,6 +1,7 @@
 /**
  * ? Site: https://jikan.moe/
  * ? API documentation: https://docs.api.jikan.moe/
+ *
  * ! JSON notes
  * * Any property (except arrays or objects) whose value does not exist or is undetermined, will be null.
  * * Any array or object property whose value does not exist or is undetermined, will be empty.
@@ -34,7 +35,7 @@ export async function getTopAnimes(parameters = {}, quantity = maxQuantity) {
         const curruntLimit = quantity > maxLimit ? maxLimit : quantity;
         quantity -= curruntLimit;
 
-        const url = createUrlQuery("top/anime", parameters, page, curruntLimit);
+        const url = createUrlQuery("top/anime", page, curruntLimit, parameters);
 
         const response = await fetch(url);
         const jsonData = await response.json();
@@ -46,11 +47,13 @@ export async function getTopAnimes(parameters = {}, quantity = maxQuantity) {
     return animeList;
 }
 
-// ****************************************************************************************
+// ****************************************************************************************************
+// ****************************************************************************************************
 // helper functions
-// ****************************************************************************************
+// ****************************************************************************************************
+// ****************************************************************************************************
 
-// base url
+// url di base
 const baseUrl = "https://api.jikan.moe/v4/";
 
 // serie tv, film, Original Video Animation, speciale, Original Net Animation, musica
@@ -61,21 +64,24 @@ const validFilters = ["airing", "upcoming", "bypopularity", "favorite"];
 
 function createUrlQuery(
     resourcePath,
-    parameters = {},
     page,
-    quantity = maxLimit
+    quantity = maxLimit,
+    parameters = {}
 ) {
     const { type, filter } = parameters;
 
     // controllo parametri
+    if (page < 1) {
+        throw new Error(`Invalid page: ${page}`);
+    }
+    if (quantity < 1 || quantity > maxLimit) {
+        throw new Error(`Invalid quantity: ${quantity}`);
+    }
     if (type && !validTypes.includes(type)) {
         throw new Error(`Invalid type: ${type}`);
     }
     if (filter && !validFilters.includes(filter)) {
         throw new Error(`Invalid filter: ${filter}`);
-    }
-    if (quantity && (quantity < 1 || quantity > maxLimit)) {
-        throw new Error(`Invalid quantity: ${quantity}`);
     }
 
     // creazione query
