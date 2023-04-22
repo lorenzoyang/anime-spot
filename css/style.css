@@ -1,0 +1,11 @@
+.card-img-top {
+    height: 200px;
+    /* is used to ensure that the image fills the container and is cropped to fit the available space. */
+    object-fit: cover;
+}
+
+/* Add margin-top to main content to account for fixed navbar */
+main {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
