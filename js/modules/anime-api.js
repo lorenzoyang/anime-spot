@@ -23,19 +23,23 @@
  */
 
 // limite massimo di risultati per pagina
-const maxLimit = 25;
+export const MAX_LIMIT = 25;
 // numero massimo di risultati che possono essere restituiti in una singola richiesta
-export const maxQuantity = 50;
+export const MAX_COUNT = 50;
 
-export async function getTopAnimes(parameters = {}, quantity = maxQuantity) {
+export async function getTopAnimes(filter, count = MAX_COUNT) {
     let animeList = [];
 
     let page = 1;
-    while (quantity > 0) {
-        const curruntLimit = quantity > maxLimit ? maxLimit : quantity;
-        quantity -= curruntLimit;
+    while (count > 0) {
+        const curruntLimit = count > MAX_LIMIT ? MAX_LIMIT : count;
+        count -= curruntLimit;
 
-        const url = createUrlQuery("top/anime", page, curruntLimit, parameters);
+        const url = createUrlQuery("/top/anime", {
+            page: page,
+            limit: curruntLimit,
+            filter: filter,
+        });
 
         const response = await fetch(url);
         const jsonData = await response.json();
@@ -47,6 +51,14 @@ export async function getTopAnimes(parameters = {}, quantity = maxQuantity) {
     return animeList;
 }
 
+export async function getAnimeByName(name) {
+    const url = createUrlQuery("/anime", { name: name });
+    const response = await fetch(url);
+    const jsonData = await response.json();
+
+    console.log(jsonData);
+}
+
 // ****************************************************************************************************
 // ****************************************************************************************************
 // helper functions
@@ -54,7 +66,7 @@ export async function getTopAnimes(parameters = {}, quantity = maxQuantity) {
 // ****************************************************************************************************
 
 // url di base
-const baseUrl = "https://api.jikan.moe/v4/";
+const baseUrl = "https://api.jikan.moe/v4";
 
 // serie tv, film, Original Video Animation, speciale, Original Net Animation, musica
 const validTypes = ["tv", "movie", "ova", "special", "ona", "music"];
@@ -62,20 +74,15 @@ const validTypes = ["tv", "movie", "ova", "special", "ona", "music"];
 // airing = in corso, upcoming = in arrivo, bypopularity = per popolarità, favorite = preferiti
 const validFilters = ["airing", "upcoming", "bypopularity", "favorite"];
 
-function createUrlQuery(
-    resourcePath,
-    page,
-    quantity = maxLimit,
-    parameters = {}
-) {
-    const { type, filter } = parameters;
+function createUrlQuery(resourcePath, parameters = {}) {
+    const { page, limit, type, filter, name } = parameters;
 
-    // controllo parametri
-    if (page < 1) {
+    // controllo dei parametri
+    if (page && page < 1) {
         throw new Error(`Invalid page: ${page}`);
     }
-    if (quantity < 1 || quantity > maxLimit) {
-        throw new Error(`Invalid quantity: ${quantity}`);
+    if (limit < 1 || limit > MAX_LIMIT) {
+        throw new Error(`Invalid limit: ${limit}`);
     }
     if (type && !validTypes.includes(type)) {
         throw new Error(`Invalid type: ${type}`);
@@ -83,20 +90,30 @@ function createUrlQuery(
     if (filter && !validFilters.includes(filter)) {
         throw new Error(`Invalid filter: ${filter}`);
     }
+    if (name && typeof name !== "string") {
+        throw new Error(`Invalid name: ${name}`);
+    }
 
     // creazione query
     const url = new URL(baseUrl + resourcePath);
     const searchParams = url.searchParams;
 
     // aggiunta parametri
-    searchParams.set("page", page);
-    searchParams.set("limit", quantity);
+    if (page) {
+        searchParams.set("page", page);
+    }
+    if (limit) {
+        searchParams.set("limit", limit);
+    }
     if (type) {
         searchParams.set("type", type);
     }
     if (filter) {
         searchParams.set("filter", filter);
     }
-
+    if (name) {
+        searchParams.set("q", name);
+    }
+    console.log(url.toString());
     return url.toString();
 }

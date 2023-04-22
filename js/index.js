@@ -20,33 +20,27 @@ async function loadAnimeImagesByRadioSelection() {
     switch (true) {
         case radioBtns.airing.checked:
             if (airingAnimeList.length === 0) {
-                airingAnimeList = await AnimeApi.getTopAnimes({
-                    filter: "airing",
-                });
+                airingAnimeList = await AnimeApi.getTopAnimes("airing");
             }
             populateAnimeImageCards(airingAnimeList);
             break;
         case radioBtns.upcoming.checked:
             if (upcomingAnimeList.length === 0) {
-                upcomingAnimeList = await AnimeApi.getTopAnimes({
-                    filter: "upcoming",
-                });
+                upcomingAnimeList = await AnimeApi.getTopAnimes("upcoming");
             }
             populateAnimeImageCards(upcomingAnimeList);
             break;
         case radioBtns.favorite.checked:
             if (favoriteAnimeList.length === 0) {
-                favoriteAnimeList = await AnimeApi.getTopAnimes({
-                    filter: "favorite",
-                });
+                favoriteAnimeList = await AnimeApi.getTopAnimes("favorite");
             }
             populateAnimeImageCards(favoriteAnimeList);
             break;
         case radioBtns.bypopularity.checked:
             if (bypopularityAnimeList.length === 0) {
-                bypopularityAnimeList = await AnimeApi.getTopAnimes({
-                    filter: "bypopularity",
-                });
+                bypopularityAnimeList = await AnimeApi.getTopAnimes(
+                    "bypopularity"
+                );
             }
             populateAnimeImageCards(bypopularityAnimeList);
             break;
@@ -84,7 +78,7 @@ function generateAnimeImageCards(cardCount) {
 }
 
 function populateAnimeImageCards(animeList) {
-    const MAX_TITLE_LENGTH = 20;
+    const MAX_TITLE_LENGTH = 18;
     const animeListContainer = document.querySelector("#anime-list-container");
     const animeCards = animeListContainer.querySelectorAll(".card");
 
@@ -105,5 +99,6 @@ function populateAnimeImageCards(animeList) {
     });
 }
 
-window.addEventListener("load", generateAnimeImageCards(AnimeApi.maxQuantity));
-window.addEventListener("load", loadAnimeImagesByRadioSelection);
+// window.addEventListener("load", generateAnimeImageCards(AnimeApi.maxQuantity));
+// window.addEventListener("load", loadAnimeImagesByRadioSelection);
+window.addEventListener("load", AnimeApi.getAnimeByName("naruto"));
