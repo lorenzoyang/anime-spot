@@ -25,7 +25,7 @@
 // limite massimo di risultati per pagina
 const maxLimit = 25;
 // numero massimo di risultati che possono essere restituiti in una singola richiesta
-export const maxQuantity = 30;
+export const maxQuantity = 50;
 
 export async function getTopAnimes(parameters = {}, quantity = maxQuantity) {
     let animeList = [];

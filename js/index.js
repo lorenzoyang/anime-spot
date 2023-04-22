@@ -56,6 +56,15 @@ async function loadAnimeImagesByRadioSelection() {
 }
 
 function generateAnimeImageCards(cardCount) {
+    // HTML TEMPLATE
+    // <div class="col">
+    //     <div class="card shadow-sm h-100">
+    //         <img src="" alt="" class="card-img-top" />
+    //         <div class="card-body">
+    //             <p class="card-text"></p>
+    //         </div>
+    //     </div>
+    // </div>
     const animeListContainer = document.querySelector("#anime-list-container");
 
     for (let i = 0; i < cardCount; i++) {
@@ -75,7 +84,7 @@ function generateAnimeImageCards(cardCount) {
 }
 
 function populateAnimeImageCards(animeList) {
-    const MAX_TITLE_LENGTH = 45;
+    const MAX_TITLE_LENGTH = 20;
     const animeListContainer = document.querySelector("#anime-list-container");
     const animeCards = animeListContainer.querySelectorAll(".card");
 
@@ -85,7 +94,7 @@ function populateAnimeImageCards(animeList) {
         const title = card.querySelector(".card-text");
 
         // img.src = anime.images.jpg.small_image_url;
-        img.src = anime.images.jpg.image_url;
+        img.src = anime.images.jpg.large_image_url;
         img.alt = anime.title;
 
         anime.title =
