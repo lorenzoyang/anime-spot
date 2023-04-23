@@ -24,39 +24,28 @@
 
 // limite massimo di risultati per pagina
 export const MAX_LIMIT = 25;
-// numero massimo di risultati che possono essere restituiti in una singola richiesta
-export const MAX_COUNT = 50;
 
-export async function getTopAnimes(filter, count = MAX_COUNT) {
-    let animeList = [];
+export async function getTopAnimes(page, filter) {
+    const url = createUrlQuery("/top/anime", {
+        page: page,
+        filter: filter,
+        limit: MAX_LIMIT,
+    });
 
-    let page = 1;
-    while (count > 0) {
-        const curruntLimit = count > MAX_LIMIT ? MAX_LIMIT : count;
-        count -= curruntLimit;
-
-        const url = createUrlQuery("/top/anime", {
-            page: page,
-            limit: curruntLimit,
-            filter: filter,
-        });
-
+    try {
         const response = await fetch(url);
-        const jsonData = await response.json();
+        if (!response.ok) {
+            throw new Error(
+                `HTTP error: ${response.status}, message: ${response.statusText}`
+            );
+        }
+        const data = await response.json();
+        console.log(data);
 
-        animeList = animeList.concat(jsonData.data);
-
-        page++;
+        return data;
+    } catch (error) {
+        console.error(`Could not get data: ${error}`);
     }
-    return animeList;
-}
-
-export async function getAnimeByName(name) {
-    const url = createUrlQuery("/anime", { name: name });
-    const response = await fetch(url);
-    const jsonData = await response.json();
-
-    console.log(jsonData);
 }
 
 // ****************************************************************************************************

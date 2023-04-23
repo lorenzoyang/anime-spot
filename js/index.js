@@ -8,86 +8,67 @@ const radioBtns = {
 };
 
 for (const key in radioBtns) {
-    radioBtns[key].addEventListener("change", loadAnimeImagesByRadioSelection);
+    radioBtns[key].addEventListener("change", updateAnimeCards);
 }
 
-let airingAnimeList = [];
-let upcomingAnimeList = [];
-let favoriteAnimeList = [];
-let bypopularityAnimeList = [];
+const airing = { animeList: [], page: 1 };
+const upcoming = { animeList: [], page: 1 };
+const favorite = { animeList: [], page: 1 };
+const bypopularity = { animeList: [], page: 1 };
 
-async function loadAnimeImagesByRadioSelection() {
+async function updateAnimeCards() {
     switch (true) {
         case radioBtns.airing.checked:
-            if (airingAnimeList.length === 0) {
-                airingAnimeList = await AnimeApi.getTopAnimes("airing");
+            if (airing.animeList.length === 0) {
+                airing.animeList = await AnimeApi.getTopAnimes("airing");
+                airing.page++;
             }
-            populateAnimeImageCards(airingAnimeList);
+            populateAnimeCards(airing.animeList);
             break;
         case radioBtns.upcoming.checked:
-            if (upcomingAnimeList.length === 0) {
-                upcomingAnimeList = await AnimeApi.getTopAnimes("upcoming");
+            if (upcoming.animeList.length === 0) {
+                upcoming.animeList = await AnimeApi.getTopAnimes("upcoming");
+                upcoming.page++;
             }
-            populateAnimeImageCards(upcomingAnimeList);
+            populateAnimeCards(upcoming.animeList);
             break;
         case radioBtns.favorite.checked:
-            if (favoriteAnimeList.length === 0) {
-                favoriteAnimeList = await AnimeApi.getTopAnimes("favorite");
+            if (favorite.animeList.length === 0) {
+                favorite.animeList = await AnimeApi.getTopAnimes("favorite");
+                favorite.page++;
             }
-            populateAnimeImageCards(favoriteAnimeList);
+            populateAnimeCards(favorite.animeList);
             break;
         case radioBtns.bypopularity.checked:
-            if (bypopularityAnimeList.length === 0) {
-                bypopularityAnimeList = await AnimeApi.getTopAnimes(
+            if (bypopularity.animeList.length === 0) {
+                bypopularity.animeList = await AnimeApi.getTopAnimes(
                     "bypopularity"
                 );
+                bypopularity.page++;
             }
-            populateAnimeImageCards(bypopularityAnimeList);
+            populateAnimeCards(bypopularity.animeList);
             break;
         default:
             throw new Error("Invalid radio button selection");
     }
 }
 
-function generateAnimeImageCards(cardCount) {
-    // HTML TEMPLATE
-    // <div class="col">
-    //     <div class="card shadow-sm h-100">
-    //         <img src="" alt="" class="card-img-top" />
-    //         <div class="card-body">
-    //             <p class="card-text"></p>
-    //         </div>
-    //     </div>
-    // </div>
-    const animeListContainer = document.querySelector("#anime-list-container");
-
+function initializeAnimeCards(cardCount) {
     for (let i = 0; i < cardCount; i++) {
-        const parentContainer = document.createElement("div");
-        parentContainer.classList.add("col");
-
-        parentContainer.innerHTML = `
-        <div class="card shadow-sm h-100">
-            <img src="" alt="" class="card-img-top" />
-            <div class="card-body">
-                <p class="card-text"></p>
-            </div>
-        </div>
-    `;
-        animeListContainer.appendChild(parentContainer);
+        appendAnimeCard();
     }
+    updateAnimeCards();
 }
 
-function populateAnimeImageCards(animeList) {
+function populateAnimeCards(animeList) {
     const MAX_TITLE_LENGTH = 18;
-    const animeListContainer = document.querySelector("#anime-list-container");
-    const animeCards = animeListContainer.querySelectorAll(".card");
 
-    animeCards.forEach((card, index) => {
-        const anime = animeList[index];
+    const animeCards = animeListContainer.querySelectorAll(".card");
+    animeList.forEach((anime, index) => {
+        const card = animeCards[index];
         const img = card.querySelector("img");
         const title = card.querySelector(".card-text");
 
-        // img.src = anime.images.jpg.small_image_url;
         img.src = anime.images.jpg.large_image_url;
         img.alt = anime.title;
 
@@ -99,6 +80,43 @@ function populateAnimeImageCards(animeList) {
     });
 }
 
-// window.addEventListener("load", generateAnimeImageCards(AnimeApi.maxQuantity));
+window.addEventListener("load", AnimeApi.getTopAnimes("airing"));
+
+// window.addEventListener("load", generateAnimeImageCards(AnimeApi.MAX_COUNT));
 // window.addEventListener("load", loadAnimeImagesByRadioSelection);
-window.addEventListener("load", AnimeApi.getAnimeByName("naruto"));
+// window.addEventListener("load", AnimeApi.getAnimeByName("naruto"));
+
+//
+
+// contenitore delle anime card
+const animeListContainer = document.querySelector("#anime-list-container");
+
+function generateAnimeCards(cardCount) {
+    for (let i = 0; i < cardCount; i++) {
+        appendAnimeCard();
+    }
+}
+
+function appendAnimeCard() {
+    // HTML TEMPLATE
+    // <div class="col">
+    //     <div class="card shadow-sm h-100">
+    //         <img src="" alt="" class="card-img-top" />
+    //         <div class="card-body">
+    //             <p class="card-text"></p>
+    //         </div>
+    //     </div>
+    // </div>
+    const parentContainer = document.createElement("div");
+    parentContainer.classList.add("col");
+
+    parentContainer.innerHTML = `
+        <div class="card shadow-sm h-100">
+            <img src="" alt="" class="card-img-top" />
+            <div class="card-body">
+                <p class="card-text"></p>
+            </div>
+        </div>
+    `;
+    animeListContainer.appendChild(parentContainer);
+}
