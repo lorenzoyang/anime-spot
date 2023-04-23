@@ -99,6 +99,6 @@ function populateAnimeImageCards(animeList) {
     });
 }
 
-// window.addEventListener("load", generateAnimeImageCards(AnimeApi.maxQuantity));
-// window.addEventListener("load", loadAnimeImagesByRadioSelection);
+window.addEventListener("load", generateAnimeImageCards(AnimeApi.MAX_COUNT));
+window.addEventListener("load", loadAnimeImagesByRadioSelection);
 window.addEventListener("load", AnimeApi.getAnimeByName("naruto"));
