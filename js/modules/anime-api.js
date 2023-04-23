@@ -39,10 +39,12 @@ export async function getTopAnimes(page, filter) {
                 `HTTP error: ${response.status}, message: ${response.statusText}`
             );
         }
-        const data = await response.json();
-        console.log(data);
+        const jsonResponse = await response.json();
 
-        return data;
+        return {
+            data: jsonResponse.data,
+            hasNextPage: jsonResponse.pagination.has_next_page,
+        };
     } catch (error) {
         console.error(`Could not get data: ${error}`);
     }
