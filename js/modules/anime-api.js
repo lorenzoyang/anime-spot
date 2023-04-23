@@ -41,6 +41,10 @@ export async function getTopAnimes(page, filter) {
         }
         const jsonResponse = await response.json();
 
+        console.log(
+            `getTopAnimes: page: ${page}, hasNextPage: ${jsonResponse.pagination.has_next_page}`
+        );
+
         return {
             data: jsonResponse.data,
             hasNextPage: jsonResponse.pagination.has_next_page,
