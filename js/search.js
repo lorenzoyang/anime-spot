@@ -26,6 +26,7 @@ async function displaySearchResults() {
 let submited = false;
 searchForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    document.querySelector("#load-more-btn").disabled = true;
     await displaySearchResults();
     submited = true;
 });
@@ -37,6 +38,7 @@ searchBar.addEventListener("input", () => {
             searchBar.value = "";
             AnimeAlbum.createDefault();
             AnimeAlbum.populateAnimeCardsForFilter("airing");
+            document.querySelector("#load-more-btn").disabled = true;
         }
     }
 });

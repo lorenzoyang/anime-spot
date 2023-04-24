@@ -53,3 +53,7 @@ window.addEventListener("load", () => {
     AnimeAlbum.createDefault();
     AnimeAlbum.populateAnimeCardsForFilter("airing");
 });
+
+document.querySelector("#load-more-btn").addEventListener("click", async () => {
+    await expandAnimeCardsOnRadioBtn();
+});
