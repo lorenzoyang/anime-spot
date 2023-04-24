@@ -17,12 +17,12 @@ const animeFilter = {
     bypopularity: bypopularity,
 };
 
-export function initializeAnimeAlbum() {
+export function createDefault() {
+    removeAnimeCardsFrom(0);
     appendAnimeCardsFor(COUNT);
-    populateAnimeCards("airing");
 }
 
-export async function populateAnimeCards(filter, start = 0) {
+export async function populateAnimeCardsForFilter(filter) {
     if (animeFilter[filter].animeList.length === 0) {
         const result = await AnimeApi.getTopAnimes(
             animeFilter[filter].page,
@@ -32,18 +32,52 @@ export async function populateAnimeCards(filter, start = 0) {
         animeFilter[filter].page++;
         animeFilter[filter].hasNextPage = result.hasNextPage;
     }
+    populateAnimeCards(animeFilter[filter].animeList);
+}
 
-    removeAnimeCardsFrom(animeFilter[filter].animeList.length);
+export function populateAnimeCardsForArray(animeList) {
+    populateAnimeCards(animeList);
+}
+
+export async function expandAnimeCardsForFilter(filter) {
+    if (animeFilter[filter].hasNextPage) {
+        appendAnimeCardsFor(COUNT);
+
+        let result = await AnimeApi.getTopAnimes(
+            animeFilter[filter].page,
+            filter
+        );
+
+        animeFilter[filter].animeList = animeFilter[filter].animeList.concat(
+            result.data
+        );
+        animeFilter[filter].page++;
+        animeFilter[filter].hasNextPage = result.hasNextPage;
+
+        populateAnimeCards(
+            animeFilter[filter].animeList,
+            animeFilter[filter].animeList.length - COUNT
+        );
+    }
+}
+
+// ****************************************************************************************************
+// ****************************************************************************************************
+// helper functions
+// ****************************************************************************************************
+// ****************************************************************************************************
+
+function populateAnimeCards(animeList, start = 0) {
+    removeAnimeCardsFrom(animeList.length);
 
     // populate anime cards
-    const animeList = animeFilter[filter].animeList;
     const animeCards = animeListContainer.querySelectorAll(".card");
     const MAX_TITLE_LENGTH = 18;
 
     let cardIndex = start;
 
     console.log(
-        `start: ${start}, animeList.length: ${animeList.length}, cardIndex: ${cardIndex}, animeCards.length: ${animeCards.length}`
+        `cardIndex/start: ${cardIndex}, animeList.length: ${animeList.length}, animeCards.length: ${animeCards.length}`
     );
 
     animeList.slice(start, animeList.length).forEach((anime) => {
@@ -61,36 +95,6 @@ export async function populateAnimeCards(filter, start = 0) {
         title.innerHTML = `<strong>${anime.title}</strong>`;
     });
 }
-
-export async function expandAnimeCards(filter) {
-    if (animeFilter[filter].hasNextPage) {
-        appendAnimeCardsFor(COUNT);
-
-        console.log("expandAnimeCards: appended anime cards");
-
-        let result = await AnimeApi.getTopAnimes(
-            animeFilter[filter].page,
-            filter
-        );
-
-        animeFilter[filter].animeList = animeFilter[filter].animeList.concat(
-            result.data
-        );
-        animeFilter[filter].page++;
-        animeFilter[filter].hasNextPage = result.hasNextPage;
-
-        populateAnimeCards(
-            filter,
-            animeFilter[filter].animeList.length - COUNT
-        );
-    }
-}
-
-// ****************************************************************************************************
-// ****************************************************************************************************
-// helper functions
-// ****************************************************************************************************
-// ****************************************************************************************************
 
 function appendAnimeCardsFor(count = COUNT) {
     // HTML TEMPLATE
@@ -119,8 +123,11 @@ function appendAnimeCardsFor(count = COUNT) {
 }
 
 function removeAnimeCardsFrom(start) {
-    const cards = animeListContainer.querySelectorAll(".col");
-    for (let i = start; i < cards.length; i++) {
-        cards[i].remove();
+    const animeCards = animeListContainer.querySelectorAll(".col");
+
+    console.log(`remove from ${start} to ${animeCards.length}`);
+
+    for (let i = start; i < animeCards.length; i++) {
+        animeCards[i].remove();
     }
 }

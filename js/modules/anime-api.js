@@ -25,6 +25,7 @@
 // limite massimo di risultati per pagina
 export const MAX_LIMIT = 25;
 
+let debug = 1;
 export async function getTopAnimes(page, filter) {
     const url = createUrlQuery("/top/anime", {
         page: page,
@@ -42,13 +43,36 @@ export async function getTopAnimes(page, filter) {
         const jsonResponse = await response.json();
 
         console.log(
-            `getTopAnimes: page: ${page}, hasNextPage: ${jsonResponse.pagination.has_next_page}`
+            `debug (anime-api): ${debug++}, getTopAnimes: page: ${page}, hasNextPage: ${
+                jsonResponse.pagination.has_next_page
+            }`
         );
 
         return {
             data: jsonResponse.data,
             hasNextPage: jsonResponse.pagination.has_next_page,
         };
+    } catch (error) {
+        console.error(`Could not get data: ${error}`);
+    }
+}
+
+// restituisce al massimo 25 risultati
+export async function getAnimeByName(name) {
+    const url = createUrlQuery("/anime", {
+        q: name,
+    });
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(
+                `HTTP error: ${response.status}, message: ${response.statusText}`
+            );
+        }
+        const jsonResponse = await response.json();
+
+        return jsonResponse.data;
     } catch (error) {
         console.error(`Could not get data: ${error}`);
     }
@@ -70,7 +94,7 @@ const validTypes = ["tv", "movie", "ova", "special", "ona", "music"];
 const validFilters = ["airing", "upcoming", "bypopularity", "favorite"];
 
 function createUrlQuery(resourcePath, parameters = {}) {
-    const { page, limit, type, filter, name } = parameters;
+    const { page, limit, type, filter, q } = parameters;
 
     // controllo dei parametri
     if (page && page < 1) {
@@ -85,8 +109,8 @@ function createUrlQuery(resourcePath, parameters = {}) {
     if (filter && !validFilters.includes(filter)) {
         throw new Error(`Invalid filter: ${filter}`);
     }
-    if (name && typeof name !== "string") {
-        throw new Error(`Invalid name: ${name}`);
+    if (q && typeof q !== "string") {
+        throw new Error(`Invalid q (name): ${q}`);
     }
 
     // creazione query
@@ -106,9 +130,11 @@ function createUrlQuery(resourcePath, parameters = {}) {
     if (filter) {
         searchParams.set("filter", filter);
     }
-    if (name) {
-        searchParams.set("q", name);
+    if (q) {
+        searchParams.set("q", q);
     }
+
     console.log(url.toString());
+
     return url.toString();
 }

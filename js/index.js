@@ -14,57 +14,42 @@ for (const key in radioBtns) {
 function updateAnimeCardsOnRadioBtn() {
     switch (true) {
         case radioBtns.airing.checked:
-            AnimeAlbum.populateAnimeCards("airing");
+            AnimeAlbum.populateAnimeCardsForFilter("airing");
             break;
         case radioBtns.upcoming.checked:
-            AnimeAlbum.populateAnimeCards("upcoming");
+            AnimeAlbum.populateAnimeCardsForFilter("upcoming");
             break;
         case radioBtns.favorite.checked:
-            AnimeAlbum.populateAnimeCards("favorite");
+            AnimeAlbum.populateAnimeCardsForFilter("favorite");
             break;
         case radioBtns.bypopularity.checked:
-            AnimeAlbum.populateAnimeCards("bypopularity");
+            AnimeAlbum.populateAnimeCardsForFilter("bypopularity");
             break;
         default:
             throw new Error("Invalid radio button selection");
     }
 }
 
-function expandAnimeCardsOnRadioBtn() {
+async function expandAnimeCardsOnRadioBtn() {
     switch (true) {
         case radioBtns.airing.checked:
-            AnimeAlbum.expandAnimeCards("airing");
+            await AnimeAlbum.expandAnimeCardsForFilter("airing");
             break;
         case radioBtns.upcoming.checked:
-            AnimeAlbum.expandAnimeCards("upcoming");
+            await AnimeAlbum.expandAnimeCardsForFilter("upcoming");
             break;
         case radioBtns.favorite.checked:
-            AnimeAlbum.expandAnimeCards("favorite");
+            await AnimeAlbum.expandAnimeCardsForFilter("favorite");
             break;
         case radioBtns.bypopularity.checked:
-            AnimeAlbum.expandAnimeCards("bypopularity");
+            await AnimeAlbum.expandAnimeCardsForFilter("bypopularity");
             break;
         default:
             throw new Error("Invalid radio button selection");
     }
 }
 
-window.addEventListener("load", AnimeAlbum.initializeAnimeAlbum());
-
-let isFunctionRunning = false;
-let isThrottled = false;
-window.addEventListener("scroll", () => {
-    if (isFunctionRunning || isThrottled) {
-        return;
-    }
-
-    if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
-        isFunctionRunning = true;
-        expandAnimeCardsOnRadioBtn();
-        setTimeout(() => {
-            isFunctionRunning = false;
-            isThrottled = false;
-        }, 1000); // set a timeout to reset the flag variable after a delay
-        isThrottled = true;
-    }
+window.addEventListener("load", () => {
+    AnimeAlbum.createDefault();
+    AnimeAlbum.populateAnimeCardsForFilter("airing");
 });

@@ -13,6 +13,7 @@
 
         <link rel="stylesheet" type="text/css" href="./css/style.css" />
         <script src="./js/index.js" type="module" defer></script>
+        <script src="./js/search.js" type="module" defer></script>
     </head>
     <body>
         <!-- navbar -->
@@ -43,15 +44,20 @@
                 </a>
 
                 <!-- Search bar -->
-                <form class="d-flex mx-auto" role="search">
+                <form class="d-flex mx-auto" role="search" id="search-form">
                     <input
                         class="form-control me-2 bg-light"
                         type="search"
                         placeholder="Search"
                         aria-label="Search"
                         style="width: 500px"
+                        id="search-bar"
                     />
-                    <button class="btn btn-outline-success" type="submit">
+                    <button
+                        class="btn btn-outline-success"
+                        type="submit"
+                        id="search-btn"
+                    >
                         Search
                     </button>
                 </form>
