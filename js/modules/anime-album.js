@@ -101,7 +101,9 @@ function appendAnimeCardsFor(count = COUNT) {
     // HTML TEMPLATE
     // <div class="col">
     //     <div class="card shadow-sm h-100">
-    //         <img src="" alt="" class="card-img-top" />
+    //         <a href="html/anime-info.html">
+    //             <img src="" alt="" class="card-img-top" />
+    //         </a>
     //         <div class="card-body">
     //             <p class="card-text"></p>
     //         </div>
@@ -114,7 +116,9 @@ function appendAnimeCardsFor(count = COUNT) {
 
         parentContainer.innerHTML = `
         <div class="card shadow-sm h-100">
-            <img src="" alt="" class="card-img-top" />
+            <a href="../../html/anime-info.html">
+                <img src="" alt="" class="card-img-top" />
+            </a>
             <div class="card-body">
                 <p class="card-text"></p>
             </div>

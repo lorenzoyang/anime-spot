@@ -12,3 +12,9 @@
     max-height: 100%;
     overflow: hidden;
 }
+
+.card a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
