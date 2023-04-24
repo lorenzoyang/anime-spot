@@ -1,3 +1,5 @@
+import * as Utils from "./utils.js";
+
 /**
  * ? Site: https://jikan.moe/
  * ? API documentation: https://docs.api.jikan.moe/
@@ -40,6 +42,8 @@ export async function getTopAnimes(page, filter) {
             );
         }
         const jsonResponse = await response.json();
+
+        Utils.debug("called");
 
         return {
             data: jsonResponse.data,
@@ -127,5 +131,6 @@ function createUrlQuery(resourcePath, parameters = {}) {
         searchParams.set("q", q);
     }
 
+    Utils.debug(url.toString());
     return url.toString();
 }
