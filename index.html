@@ -13,11 +13,12 @@
 
         <link rel="stylesheet" type="text/css" href="./css/style.css" />
         <script src="./js/index.js" type="module" defer></script>
-        <script src="./js/search.js" type="module" defer></script>
     </head>
     <body>
         <!-- navbar -->
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <nav
+            class="navbar navbar-expand-md navbar-dark fixed-top bg-primary-subtle"
+        >
             <div class="container-fluid">
                 <a
                     href="https://github.com/YangLorenzo/YangLorenzo.github.io"
@@ -84,7 +85,7 @@
                             class="btn-group btn-group-toggle mt-3 mt-md-0"
                             data-toggle="buttons"
                         >
-                            <label class="btn btn-secondary active">
+                            <label class="btn bg-light active border-0">
                                 <input
                                     type="radio"
                                     name="options"
@@ -94,7 +95,7 @@
                                 />
                                 Airing
                             </label>
-                            <label class="btn btn-secondary">
+                            <label class="btn bg-light">
                                 <input
                                     type="radio"
                                     name="options"
@@ -103,7 +104,7 @@
                                 />
                                 Upcoming
                             </label>
-                            <label class="btn btn-secondary">
+                            <label class="btn btn-light">
                                 <input
                                     type="radio"
                                     name="options"
@@ -112,7 +113,7 @@
                                 />
                                 Favorite
                             </label>
-                            <label class="btn btn-secondary">
+                            <label class="btn btn-light">
                                 <input
                                     type="radio"
                                     name="options"
@@ -127,8 +128,29 @@
             </div>
         </nav>
 
-        <main>
-            <div class="album py-5 bg-body-tertiary">
+        <main class="bg-info-subtle">
+            <section class="py-5 text-center container">
+                <div class="row py-lg-5">
+                    <div class="col-lg-6 col-md-8 mx-auto">
+                        <h1 class="fw-light">Example</h1>
+                        <p class="lead text-body-secondary">
+                            Something short and leading about the collection
+                            below—its contents, the creator, etc. Make it short
+                            and sweet, but not too short so folks don’t simply
+                            skip over it entirely.
+                        </p>
+                        <p>
+                            <a href="#" class="btn btn-primary my-2"
+                                >Main call to action</a
+                            >
+                            <a href="#" class="btn btn-secondary my-2"
+                                >Secondary action</a
+                            >
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <div class="album py-5">
                 <div class="container">
                     <!---------------------------------------------------------------------------------------------------------------->
                     <!--The g-3 class in Bootstrap is used to add spacing between elements. 
@@ -159,10 +181,12 @@
             </div>
         </main>
 
-        <footer class="text-body-secondary py-2 bg-dark">
+        <footer class="text-body-secondary py-2 bg-info">
             <div class="container text-light">
                 <p class="float-end mb-1">
-                    <a href="#">Back to top</a>
+                    <a href="#"
+                        ><strong style="color: black">Back to top<</strong></a
+                    >
                 </p>
                 <p class="mb-1">
                     Album example is &copy; Bootstrap, but please download and
