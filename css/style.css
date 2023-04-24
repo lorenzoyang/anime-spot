@@ -12,8 +12,3 @@
     max-height: 100%;
     overflow: hidden;
 }
-
-/* Add margin-top to main content to account for fixed navbar */
-/* main {
-    margin-top: 100px;
-} */
