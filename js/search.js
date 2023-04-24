@@ -1,5 +1,6 @@
 import * as AnimeApi from "./modules/anime-api.js";
 import * as AnimeAlbum from "./modules/anime-album.js";
+import * as Index from "./index.js";
 
 // per ottenere il valore di input del form di ricerca
 const searchBar = document.querySelector("#search-bar");
@@ -35,9 +36,9 @@ searchBar.addEventListener("input", () => {
     if (submited) {
         if (searchBar.value === "") {
             submited = false;
-            searchBar.value = "";
             AnimeAlbum.createDefault();
-            AnimeAlbum.populateAnimeCardsForFilter("airing");
+            // TODO can be improved to avoid to import Index
+            Index.updateAnimeCardsOnRadioBtn();
             document.querySelector("#load-more-btn").disabled = true;
         }
     }

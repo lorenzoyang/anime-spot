@@ -25,7 +25,6 @@
 // limite massimo di risultati per pagina
 export const MAX_LIMIT = 25;
 
-let debug = 1;
 export async function getTopAnimes(page, filter) {
     const url = createUrlQuery("/top/anime", {
         page: page,
@@ -41,12 +40,6 @@ export async function getTopAnimes(page, filter) {
             );
         }
         const jsonResponse = await response.json();
-
-        console.log(
-            `debug (anime-api): ${debug++}, getTopAnimes: page: ${page}, hasNextPage: ${
-                jsonResponse.pagination.has_next_page
-            }`
-        );
 
         return {
             data: jsonResponse.data,
@@ -133,8 +126,6 @@ function createUrlQuery(resourcePath, parameters = {}) {
     if (q) {
         searchParams.set("q", q);
     }
-
-    console.log(url.toString());
 
     return url.toString();
 }

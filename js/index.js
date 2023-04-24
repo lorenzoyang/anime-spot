@@ -11,7 +11,7 @@ for (const key in radioBtns) {
     radioBtns[key].addEventListener("change", updateAnimeCardsOnRadioBtn);
 }
 
-function updateAnimeCardsOnRadioBtn() {
+export function updateAnimeCardsOnRadioBtn() {
     switch (true) {
         case radioBtns.airing.checked:
             AnimeAlbum.populateAnimeCardsForFilter("airing");
