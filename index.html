@@ -20,7 +20,7 @@
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
                 <a
-                    href="https://github.com/"
+                    href="https://github.com/YangLorenzo/YangLorenzo.github.io"
                     class="navbar-brand d-flex align-items-center"
                 >
                     <!-- Github logo svg -->
@@ -43,70 +43,91 @@
                     </svg>
                 </a>
 
-                <!-- Search bar -->
-                <form class="d-flex mx-auto" role="search" id="search-form">
-                    <input
-                        class="form-control me-2 bg-light"
-                        type="search"
-                        placeholder="Search"
-                        aria-label="Search"
-                        style="width: 500px"
-                        id="search-bar"
-                    />
-                    <button
-                        class="btn btn-outline-success"
-                        type="submit"
-                        id="search-btn"
+                <!-- Toggler/collapsible Button -->
+                <!-- for small screen-->
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navbar items -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <form
+                        class="d-flex mx-auto my-2 my-lg-0"
+                        role="search"
+                        id="search-form"
                     >
-                        Search
-                    </button>
-                </form>
+                        <input
+                            class="form-control me-2 bg-light"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                            id="search-bar"
+                        />
+                        <button
+                            class="btn btn-outline-success"
+                            type="submit"
+                            id="search-btn"
+                        >
+                            Search
+                        </button>
+                    </form>
+                    <div class="d-flex justify-content-md-end">
+                        <div
+                            class="btn-group btn-group-toggle mt-3 mt-md-0"
+                            data-toggle="buttons"
+                        >
+                            <label class="btn btn-secondary active">
+                                <input
+                                    type="radio"
+                                    name="options"
+                                    id="option1-airing"
+                                    autocomplete="off"
+                                    checked
+                                />
+                                Airing
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input
+                                    type="radio"
+                                    name="options"
+                                    id="option2-upcoming"
+                                    autocomplete="off"
+                                />
+                                Upcoming
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input
+                                    type="radio"
+                                    name="options"
+                                    id="option3-favorite"
+                                    autocomplete="off"
+                                />
+                                Favorite
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input
+                                    type="radio"
+                                    name="options"
+                                    id="option4-popularity"
+                                    autocomplete="off"
+                                />
+                                By popularity
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
 
         <main>
-            <div class="d-flex justify-content-center">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary active">
-                        <input
-                            type="radio"
-                            name="options"
-                            id="option1-airing"
-                            autocomplete="off"
-                            checked
-                        />
-                        Airing
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input
-                            type="radio"
-                            name="options"
-                            id="option2-upcoming"
-                            autocomplete="off"
-                        />
-                        Upcoming
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input
-                            type="radio"
-                            name="options"
-                            id="option3-favorite"
-                            autocomplete="off"
-                        />
-                        Favorite
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input
-                            type="radio"
-                            name="options"
-                            id="option4-popularity"
-                            autocomplete="off"
-                        />
-                        By popularity
-                    </label>
-                </div>
-            </div>
-
             <div class="album py-5 bg-body-tertiary">
                 <div class="container">
                     <!---------------------------------------------------------------------------------------------------------------->

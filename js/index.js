@@ -1,4 +1,5 @@
 import * as AnimeAlbum from "./modules/anime-album.js";
+import * as AnimeApi from "./modules/anime-api.js";
 
 const radioBtns = {
     airing: document.querySelector("#option1-airing"),
@@ -56,4 +57,50 @@ window.addEventListener("load", () => {
 
 document.querySelector("#load-more-btn").addEventListener("click", async () => {
     await expandAnimeCardsOnRadioBtn();
+});
+
+// ****************************************************************************************************
+// ****************************************************************************************************
+// search bar
+// ****************************************************************************************************
+// ****************************************************************************************************
+
+const cache = { query: "", searchResults: [] };
+
+const searchBar = document.querySelector("#search-bar");
+
+const searchForm = document.querySelector("#search-form");
+
+async function displaySearchResults() {
+    const query = searchBar.value.trim().toLowerCase();
+
+    if (cache.query === query) {
+        AnimeAlbum.populateAnimeCardsForArray(cache.searchResults);
+        return;
+    }
+
+    const searchResults = await AnimeApi.getAnimeByName(query);
+    AnimeAlbum.populateAnimeCardsForArray(searchResults);
+
+    cache.query = query;
+    cache.searchResults = searchResults;
+}
+
+let submited = false;
+searchForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    document.querySelector("#load-more-btn").disabled = true;
+    await displaySearchResults();
+    submited = true;
+});
+
+searchBar.addEventListener("input", () => {
+    if (submited) {
+        if (searchBar.value === "") {
+            submited = false;
+            AnimeAlbum.createDefault();
+            updateAnimeCardsOnRadioBtn();
+            document.querySelector("#load-more-btn").disabled = true;
+        }
+    }
 });
