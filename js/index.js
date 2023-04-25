@@ -1,6 +1,9 @@
 import * as AnimeAlbum from "./modules/anime-album.js";
 import * as AnimeApi from "./modules/anime-api.js";
 
+/**
+ * Radio button object containing all radio buttons in the HTML
+ */
 const radioBtns = {
     airing: document.querySelector("#option1-airing"),
     upcoming: document.querySelector("#option2-upcoming"),
@@ -8,10 +11,16 @@ const radioBtns = {
     bypopularity: document.querySelector("#option4-popularity"),
 };
 
+/**
+ * Adding event listener to each radio button, to update anime cards based on radio button selection
+ */
 for (const key in radioBtns) {
     radioBtns[key].addEventListener("change", updateAnimeCardsOnRadioBtn);
 }
 
+/**
+ * Update anime cards based on the selected radio button
+ */
 function updateAnimeCardsOnRadioBtn() {
     switch (true) {
         case radioBtns.airing.checked:
@@ -31,6 +40,9 @@ function updateAnimeCardsOnRadioBtn() {
     }
 }
 
+/**
+ * Expand anime cards based on the selected radio button
+ */
 function expandAnimeCardsOnRadioBtn() {
     switch (true) {
         case radioBtns.airing.checked:
@@ -62,11 +74,19 @@ document.querySelector("#load-more-btn").addEventListener("click", () => {
 // * search bar
 // ****************************************************************************************************
 
+/**
+ * Cache object to store query and search results for future use
+ */
 const cache = { query: "", searchResults: [] };
 
 const searchBar = document.querySelector("#search-bar");
 const searchForm = document.querySelector("#search-form");
 
+/**
+ * Display search results based on the search query
+ *
+ * @async
+ */
 async function displaySearchResults() {
     const query = searchBar.value.trim().toLowerCase();
 
@@ -82,6 +102,9 @@ async function displaySearchResults() {
     cache.searchResults = searchResults;
 }
 
+/**
+ * Boolean to check if the search form has been submitted
+ */
 let submited = false;
 searchForm.addEventListener("submit", async (e) => {
     e.preventDefault();

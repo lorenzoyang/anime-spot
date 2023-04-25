@@ -1,4 +1,10 @@
 /**
+ * This module provides functions for making requests to the Jikan API to retrieve anime data.
+ *
+ * @module AnimeApi
+ */
+
+/**
  * ? Site: https://jikan.moe/
  * ? API documentation: https://docs.api.jikan.moe/
  *
@@ -25,8 +31,30 @@
 import * as Utils from "./utils.js";
 
 // limite massimo di risultati per pagina
+/**
+ * The maximum number of anime results per page.
+ *
+ * @global
+ *
+ * @constant
+ * @type {number}
+ *
+ */
 export const MAX_LIMIT = 25;
 
+/**
+ * Gets the top anime list.
+ * Retrieves the top anime list from the Jikan API.
+ *
+ * @async
+ *
+ * @param {number} page - The page number.
+ * @param {string} filter - The type of filter to apply to the results.
+ *
+ * @throws {Error} If the request fails.
+ *
+ * @returns {Promise<Object>} A Promise that resolves to an object containing the top anime data and a boolean indicating if there is a next page.
+ */
 export async function getTopAnimes(page, filter) {
     const url = createUrlQuery("/top/anime", {
         page: page,
@@ -54,7 +82,17 @@ export async function getTopAnimes(page, filter) {
     }
 }
 
-// restituisce al massimo 25 risultati
+/**
+ * Searches for anime by name.
+ *
+ * @async
+ *
+ * @param {string} name - The name of the anime to search for.
+ *
+ * @throws {Error} If the search fails.
+ *
+ * @returns {Promise<Array>} A Promise that resolves to an array of anime data. 25 items per search.
+ */
 export async function searchAnimeByName(name) {
     const url = createUrlQuery("/anime", {
         q: name,
@@ -90,6 +128,21 @@ const validTypes = ["tv", "movie", "ova", "special", "ona", "music"];
 // airing = in corso, upcoming = in arrivo, bypopularity = per popolarità, favorite = preferiti
 const validFilters = ["airing", "upcoming", "bypopularity", "favorite"];
 
+/**
+ * Creates a URL query string for a given resource path and parameters.
+ *
+ * @param {string} resourcePath - The path to the resource.
+ * @param {Object} [parameters={}] - An optional object containing query parameters.
+ * @param {number} [parameters.page] - The page number.
+ * @param {number} [parameters.limit] - The maximum number of items to return.
+ * @param {string} [parameters.type] - The type of item to return.
+ * @param {string} [parameters.filter] - A filter to apply to the results.
+ * @param {string} [parameters.q] - A search query to apply to the results.
+ *
+ * @throws {Error} If any of the parameters are invalid.
+ *
+ * @returns {string} The URL with the query string appended.
+ */
 function createUrlQuery(resourcePath, parameters = {}) {
     const { page, limit, type, filter, q } = parameters;
 

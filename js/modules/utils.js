@@ -1,5 +1,21 @@
+/**
+ * Module providing common utility functions for use across multiple JavaScript files.
+ *
+ * @module Utils
+ */
+
 const DEBUG_FLAG = true;
 
+/**
+ * Prints a debug message to the console.
+ *
+ * @param {string} msg - The debug message to print.
+ * @param {Object} [options] - An object containing optional parameters.
+ * @param {string} [options.color="blue"] - The color of the debug message.
+ * @param {Function} [options.predicate] - A function that returns a boolean indicating whether or not the debug message should be printed.
+ * @param {string} [options.passed] - The message to print if the predicate function returns true.
+ * @param {string} [options.failed] - The message to print if the predicate function returns false.
+ */
 export function debug(msg, options = {}) {
     if (DEBUG_FLAG) {
         let { color = "blue", predicate, passed, failed } = options;
@@ -17,6 +33,11 @@ export function debug(msg, options = {}) {
     }
 }
 
+/**
+ * Returns the name of the function that called the current function.
+ *
+ * @returns {string} - The name of the calling function.
+ */
 function getCallerName() {
     const error = new Error();
     const stackTrace = error.stack.split("\n");
