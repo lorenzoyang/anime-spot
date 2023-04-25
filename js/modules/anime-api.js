@@ -1,5 +1,3 @@
-import * as Utils from "./utils.js";
-
 /**
  * ? Site: https://jikan.moe/
  * ? API documentation: https://docs.api.jikan.moe/
@@ -24,6 +22,8 @@ import * as Utils from "./utils.js";
  *
  */
 
+import * as Utils from "./utils.js";
+
 // limite massimo di risultati per pagina
 export const MAX_LIMIT = 25;
 
@@ -43,7 +43,7 @@ export async function getTopAnimes(page, filter) {
         }
         const jsonResponse = await response.json();
 
-        Utils.debug("called");
+        Utils.debug(`called`);
 
         return {
             data: jsonResponse.data,
@@ -55,7 +55,7 @@ export async function getTopAnimes(page, filter) {
 }
 
 // restituisce al massimo 25 risultati
-export async function getAnimeByName(name) {
+export async function searchAnimeByName(name) {
     const url = createUrlQuery("/anime", {
         q: name,
     });
@@ -69,6 +69,8 @@ export async function getAnimeByName(name) {
         }
         const jsonResponse = await response.json();
 
+        Utils.debug(`called`);
+
         return jsonResponse.data;
     } catch (error) {
         console.error(`Could not get data: ${error}`);
@@ -76,9 +78,7 @@ export async function getAnimeByName(name) {
 }
 
 // ****************************************************************************************************
-// ****************************************************************************************************
-// helper functions
-// ****************************************************************************************************
+// * helper functions
 // ****************************************************************************************************
 
 // url di base
@@ -132,5 +132,6 @@ function createUrlQuery(resourcePath, parameters = {}) {
     }
 
     Utils.debug(url.toString());
+
     return url.toString();
 }

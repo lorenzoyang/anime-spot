@@ -2,13 +2,15 @@ const DEBUG_FLAG = true;
 
 export function debug(msg, options = {}) {
     if (DEBUG_FLAG) {
-        let { color = "blue", predicate } = options;
+        let { color = "blue", predicate, passed, failed } = options;
 
         let output = `[DEBUG: ${getCallerName()}]: ${msg}`;
 
         if (predicate) {
             const result = predicate();
-            output += result ? "-> PASSED !" : " FAILED !";
+            output += result
+                ? ` -> PASSED: ${passed}`
+                : ` -> FAILED: ${failed}`;
             color = result ? "green" : "red";
         }
         console.log(`%c${output}`, `color: ${color}`);
