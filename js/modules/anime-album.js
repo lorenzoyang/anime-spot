@@ -151,34 +151,41 @@ function populateAnimeCards(animeList, start = 0) {
 /**
  * Appends anime cards to the anime list container.
  *
+ * HTML structure of a card:
+ *
+ *
+ *   <div class="col">
+ *       <div class="card shadow-sm h-100">
+ *           <img
+ *               src=""
+ *               alt=""
+ *               class="card-img-top img-fluid"
+ *           />
+ *           <div class="card-body">
+ *               <p class="card-text"></p>
+ *           </div>
+ *       </div>
+ *   </div>
+ *
  * @param {number} count - The number of anime cards to append. Default value is COUNT.
  */
 function appendAnimeCardsFor(count = COUNT) {
-    // HTML TEMPLATE
-    // <div class="col">
-    //     <div class="card shadow-sm h-100">
-    //         <a href="html/anime-info.html">
-    //             <img src="" alt="" class="card-img-top" />
-    //         </a>
-    //         <div class="card-body">
-    //             <p class="card-text"></p>
-    //         </div>
-    //     </div>
-    // </div>
     const animeListContainer = getAnimeListContainer();
     for (let i = 0; i < count; i++) {
         const parentContainer = document.createElement("div");
         parentContainer.classList.add("col");
 
         parentContainer.innerHTML = `
-        <div class="card shadow-sm h-100">
-            <a href="../../html/anime-info.html">
-                <img src="" alt="" class="card-img-top" />
-            </a>
-            <div class="card-body">
-                <p class="card-text"></p>
+            <div class="card shadow-sm h-100">
+                <img
+                    src=""
+                    alt=""
+                    class="card-img-top img-fluid"
+                />
+                <div class="card-body">
+                    <p class="card-text"></p>
+                </div>
             </div>
-        </div>
         `;
         animeListContainer.appendChild(parentContainer);
     }

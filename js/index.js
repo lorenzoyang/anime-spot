@@ -122,3 +122,21 @@ searchBar.addEventListener("input", () => {
         }
     }
 });
+
+// ****************************************************************************************************
+// * anime quote
+// ****************************************************************************************************
+
+const animeQuoteTitle = document.querySelector("#anime-quote-title");
+const animeQuoteText = document.querySelector("#anime-quote-text");
+
+async function displayAnimeQuote() {
+    const animeQuote = await AnimeApi.getRandomAnimeQuote();
+    animeQuoteText.textContent = animeQuote.quote;
+    animeQuoteTitle.innerText = `${animeQuote.character} ${animeQuote.anime}`;
+    animeQuoteTitle.innerHTML = `<strong>${animeQuote.character}</strong> <small>from</small> <strong>${animeQuote.anime}</strong>`;
+}
+
+window.addEventListener("load", () => {
+    displayAnimeQuote();
+});
