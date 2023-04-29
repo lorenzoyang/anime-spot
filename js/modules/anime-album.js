@@ -129,23 +129,54 @@ function populateAnimeCards(animeList, start = 0) {
         failed: "animeList.length != animeCards.length",
     });
 
-    const MAX_TITLE_LENGTH = 18;
     let cardIndex = start;
-
     animeList.slice(start, animeList.length).forEach((anime) => {
         const card = getAnimeCards()[cardIndex++];
-        const img = card.querySelector("img");
-        const title = card.querySelector(".card-text");
+        setAnimeCardData(anime, card);
 
-        img.src = anime.images.jpg.large_image_url;
-        img.alt = anime.title;
-
-        anime.title =
-            anime.title.length > MAX_TITLE_LENGTH
-                ? anime.title.substring(0, MAX_TITLE_LENGTH) + "..."
-                : anime.title;
-        title.innerHTML = `<strong>${anime.title}</strong>`;
+        // Add event listener to the anime card to display the modal popup
+        card.addEventListener("click", () => {
+            displayAnimeModal(anime);
+        });
     });
+}
+
+function setAnimeCardData(anime, card) {
+    const MAX_TITLE_LENGTH = 18;
+    const img = card.querySelector("img");
+    const title = card.querySelector(".card-text");
+
+    img.src = anime.images.jpg.large_image_url;
+    img.alt = anime.title;
+
+    anime.title =
+        anime.title.length > MAX_TITLE_LENGTH
+            ? anime.title.substring(0, MAX_TITLE_LENGTH) + "..."
+            : anime.title;
+    title.innerHTML = `<strong>${anime.title}</strong>`;
+}
+
+/**
+ * Displays a modal popup with the details of the clicked anime.
+ *
+ * @param {Object} anime - The anime object to display in the modal popup.
+ */
+function displayAnimeModal(anime) {
+    const modalTitle = document.querySelector("#anime-modal-label");
+    const animeImage = document.querySelector(".anime-image");
+    const animeDetailsText = document.querySelector(".anime-details-text");
+
+    modalTitle.textContent = anime.title;
+    animeImage.src = anime.images.jpg.large_image_url;
+    animeImage.alt = anime.title;
+    animeDetailsText.textContent = anime.synopsis;
+
+    const modal = new bootstrap.Modal(document.getElementById("anime-modal"), {
+        keyboard: true,
+        focus: true,
+    });
+
+    modal.show();
 }
 
 /**
