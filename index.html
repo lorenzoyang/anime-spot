@@ -12,6 +12,7 @@
         />
 
         <link rel="stylesheet" type="text/css" href="./css/style.css" />
+        <link rel="stylesheet" href="./css/anime-modal.css" />
         <script src="./js/index.js" type="module" defer></script>
         <script src="./js/anime-modal.js" type="module" defer></script>
     </head>
@@ -152,13 +153,11 @@
                 aria-hidden="true"
             >
                 <div
-                    class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                    class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
                 >
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modal-title">
-                                Anime Title
-                            </h5>
+                            <h5 class="modal-title" id="modal-title"></h5>
                             <button
                                 type="button"
                                 class="btn-close"
@@ -167,14 +166,61 @@
                             ></button>
                         </div>
                         <div class="modal-body">
-                            <div class="">
-                                <img src="" alt="" class="" id="modal-image" />
-                            </div>
-                            <div class="anime-details-container">
-                                <h6 class="">Details</h6>
-                                <p class="" id="modal-details">
-                                    Description goes here.
-                                </p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="">
+                                        <img
+                                            src=""
+                                            alt=""
+                                            class="w-100"
+                                            id="modal-image"
+                                        />
+                                    </div>
+                                    <div class="mt-2">
+                                        <p class="text-body-secondary mb-1">
+                                            <strong>Genres:</strong>
+                                        </p>
+                                        <ul
+                                            class="list-unstyled mb-0"
+                                            id="modal-genres"
+                                        ></ul>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <p
+                                            class="text-body-secondary mb-1 d-inline-block"
+                                        >
+                                            <strong>Rank:</strong>
+                                        </p>
+                                        <p
+                                            class="mb-0 d-inline-block ml-2"
+                                            id="modal-rank"
+                                        ></p>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <p
+                                            class="text-body-secondary mb-1 d-inline-block"
+                                        >
+                                            <strong>Score:</strong>
+                                        </p>
+                                        <p
+                                            class="mb-0 d-inline-block ml-2"
+                                            id="modal-score"
+                                        ></p>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <p class="text-body-secondary mb-1">
+                                            <strong>Rating:</strong>
+                                        </p>
+                                        <p class="mb-0" id="modal-rating"></p>
+                                    </div>
+                                </div>
+                                <!-- ------------------------------------------ -->
+                                <div class="col-md-8">
+                                    <p class="" id="modal-synopsis"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
