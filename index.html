@@ -12,7 +12,9 @@
         />
 
         <link rel="stylesheet" type="text/css" href="./css/style.css" />
+        <link rel="stylesheet" href="./css/anime-modal.css" />
         <script src="./js/index.js" type="module" defer></script>
+        <script src="./js/anime-modal.js" type="module" defer></script>
     </head>
     <body>
         <!-- navbar -->
@@ -137,14 +139,96 @@
                                 id="anime-quote-title"
                             ></footer>
                         </blockquote>
-                        <p>
-                            <a href="#" class="btn btn-primary my-2"
-                                >Anime details</a
-                            >
-                        </p>
                     </div>
                 </div>
             </section>
+
+            <!-- modal popup window-->
+
+            <div
+                class="modal fade"
+                id="anime-modal"
+                tabindex="-1"
+                aria-labelledby="modal-title"
+                aria-hidden="true"
+            >
+                <div
+                    class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+                >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-title"></h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="">
+                                        <img
+                                            src=""
+                                            alt=""
+                                            class="w-100"
+                                            id="modal-image"
+                                        />
+                                    </div>
+                                    <div class="mt-2">
+                                        <p class="text-body-secondary mb-1">
+                                            <strong>Genres:</strong>
+                                        </p>
+                                        <ul
+                                            class="list-unstyled mb-0"
+                                            id="modal-genres"
+                                        ></ul>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <p
+                                            class="text-body-secondary mb-1 d-inline-block"
+                                        >
+                                            <strong>Rank:</strong>
+                                        </p>
+                                        <p
+                                            class="mb-0 d-inline-block ml-2"
+                                            id="modal-rank"
+                                        ></p>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <p
+                                            class="text-body-secondary mb-1 d-inline-block"
+                                        >
+                                            <strong>Score:</strong>
+                                        </p>
+                                        <p
+                                            class="mb-0 d-inline-block ml-2"
+                                            id="modal-score"
+                                        ></p>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <p class="text-body-secondary mb-1">
+                                            <strong>Rating:</strong>
+                                        </p>
+                                        <p class="mb-0" id="modal-rating"></p>
+                                    </div>
+                                </div>
+                                <!-- ------------------------------------------ -->
+                                <div class="col-md-8">
+                                    <p class="" id="modal-synopsis"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- end modal popup window-->
+
             <div class="album py-5 pt-0">
                 <div class="container">
                     <!---------------------------------------------------------------------------------------------------------------->
@@ -158,7 +242,7 @@
                         id="anime-list-container"
                     >
                         <!-- <div class="col">
-                            <div class="card shadow-sm h-100">
+                            <div class="card shadow-sm h-100 clickable-card">
                                 <img
                                     src=""
                                     alt=""

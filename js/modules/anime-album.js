@@ -90,6 +90,28 @@ export async function expandAnimeCardsForFilter(filter) {
     }
 }
 
+/**
+ * A function that handles displaying the anime modal window.
+ *
+ * @callback displayAnimeModal
+ *
+ * @param {object} anime - The anime data to display in the modal.
+ *
+ * @returns {void}
+ */
+let modalWindowHandler;
+
+/**
+ * Sets the handler function for displaying the anime modal window.
+ *
+ * @param {displayAnimeModal} handler - The function to call when displaying the modal window.
+ *
+ * @returns {void}
+ */
+export function setModalWindowHandler(handler) {
+    modalWindowHandler = handler;
+}
+
 // ****************************************************************************************************
 // * helper functions
 // ****************************************************************************************************
@@ -129,23 +151,31 @@ function populateAnimeCards(animeList, start = 0) {
         failed: "animeList.length != animeCards.length",
     });
 
-    const MAX_TITLE_LENGTH = 18;
     let cardIndex = start;
-
     animeList.slice(start, animeList.length).forEach((anime) => {
         const card = getAnimeCards()[cardIndex++];
-        const img = card.querySelector("img");
-        const title = card.querySelector(".card-text");
+        setAnimeCardData(card, anime);
 
-        img.src = anime.images.jpg.large_image_url;
-        img.alt = anime.title;
-
-        anime.title =
-            anime.title.length > MAX_TITLE_LENGTH
-                ? anime.title.substring(0, MAX_TITLE_LENGTH) + "..."
-                : anime.title;
-        title.innerHTML = `<strong>${anime.title}</strong>`;
+        // Add event listener to the anime card to display the modal popup
+        card.onclick = () => {
+            modalWindowHandler(anime);
+        };
     });
+}
+
+function setAnimeCardData(card, anime) {
+    const MAX_TITLE_LENGTH = 18;
+    const img = card.querySelector("img");
+    const title = card.querySelector(".card-text");
+
+    img.src = anime.images.jpg.large_image_url;
+    img.alt = anime.title;
+
+    const animeTitle =
+        anime.title.length > MAX_TITLE_LENGTH
+            ? anime.title.substring(0, MAX_TITLE_LENGTH) + "..."
+            : anime.title;
+    title.innerHTML = `<strong>${animeTitle}</strong>`;
 }
 
 /**
@@ -155,7 +185,7 @@ function populateAnimeCards(animeList, start = 0) {
  *
  *
  *   <div class="col">
- *       <div class="card shadow-sm h-100">
+ *       <div class="card shadow-sm h-100 clickable-card">
  *           <img
  *               src=""
  *               alt=""
@@ -176,7 +206,7 @@ function appendAnimeCardsFor(count = COUNT) {
         parentContainer.classList.add("col");
 
         parentContainer.innerHTML = `
-            <div class="card shadow-sm h-100">
+            <div class="card shadow-sm h-100 clickable-card">
                 <img
                     src=""
                     alt=""

@@ -127,8 +127,27 @@ export async function getRandomAnimeQuote() {
     return jsonResponse;
 }
 
+/**
+ * Gets a random quote related to the provided anime title from the Animechan API.
+ *
+ * @async
+ *
+ * @param {string} animeTitle - The title of the anime to get a quote for.
+ *
+ * @returns {Promise<object>} - A Promise that resolves to an object with the anime, character, and quote properties of the fetched quote.
+ */
 export async function getRandomQuoteByAnime(animeTitle) {
-    const url = createUrlQuery(animechanBaseUrl, "/random/anime");
+    const url = createUrlQuery(animechanBaseUrl, "/random/anime", {
+        title: animeTitle,
+    });
+
+    const jsonResponse = await makeHttpRequest(url);
+
+    Utils.debug(
+        `anime: "${jsonResponse.anime}", character: "${jsonResponse.character}", quote: "${jsonResponse.quote}"`
+    );
+
+    return jsonResponse;
 }
 
 // ****************************************************************************************************
