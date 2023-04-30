@@ -90,6 +90,28 @@ export async function expandAnimeCardsForFilter(filter) {
     }
 }
 
+/**
+ * A function that handles displaying the anime modal window.
+ *
+ * @callback displayAnimeModal
+ *
+ * @param {object} anime - The anime data to display in the modal.
+ *
+ * @returns {void}
+ */
+let modalWindowHandler;
+
+/**
+ * Sets the handler function for displaying the anime modal window.
+ *
+ * @param {displayAnimeModal} handler - The function to call when displaying the modal window.
+ *
+ * @returns {void}
+ */
+export function setModalWindowHandler(handler) {
+    modalWindowHandler = handler;
+}
+
 // ****************************************************************************************************
 // * helper functions
 // ****************************************************************************************************
@@ -132,16 +154,16 @@ function populateAnimeCards(animeList, start = 0) {
     let cardIndex = start;
     animeList.slice(start, animeList.length).forEach((anime) => {
         const card = getAnimeCards()[cardIndex++];
-        setAnimeCardData(anime, card);
+        setAnimeCardData(card, anime);
 
         // Add event listener to the anime card to display the modal popup
-        card.addEventListener("click", () => {
-            displayAnimeModal(anime);
-        });
+        card.onclick = () => {
+            modalWindowHandler(anime);
+        };
     });
 }
 
-function setAnimeCardData(anime, card) {
+function setAnimeCardData(card, anime) {
     const MAX_TITLE_LENGTH = 18;
     const img = card.querySelector("img");
     const title = card.querySelector(".card-text");
@@ -149,34 +171,11 @@ function setAnimeCardData(anime, card) {
     img.src = anime.images.jpg.large_image_url;
     img.alt = anime.title;
 
-    anime.title =
+    const animeTitle =
         anime.title.length > MAX_TITLE_LENGTH
             ? anime.title.substring(0, MAX_TITLE_LENGTH) + "..."
             : anime.title;
-    title.innerHTML = `<strong>${anime.title}</strong>`;
-}
-
-/**
- * Displays a modal popup with the details of the clicked anime.
- *
- * @param {Object} anime - The anime object to display in the modal popup.
- */
-function displayAnimeModal(anime) {
-    const modalTitle = document.querySelector("#anime-modal-label");
-    const animeImage = document.querySelector(".anime-image");
-    const animeDetailsText = document.querySelector(".anime-details-text");
-
-    modalTitle.textContent = anime.title;
-    animeImage.src = anime.images.jpg.large_image_url;
-    animeImage.alt = anime.title;
-    animeDetailsText.textContent = anime.synopsis;
-
-    const modal = new bootstrap.Modal(document.getElementById("anime-modal"), {
-        keyboard: true,
-        focus: true,
-    });
-
-    modal.show();
+    title.innerHTML = `<strong>${animeTitle}</strong>`;
 }
 
 /**
@@ -186,7 +185,7 @@ function displayAnimeModal(anime) {
  *
  *
  *   <div class="col">
- *       <div class="card shadow-sm h-100">
+ *       <div class="card shadow-sm h-100 clickable-card">
  *           <img
  *               src=""
  *               alt=""
@@ -207,7 +206,7 @@ function appendAnimeCardsFor(count = COUNT) {
         parentContainer.classList.add("col");
 
         parentContainer.innerHTML = `
-            <div class="card shadow-sm h-100">
+            <div class="card shadow-sm h-100 clickable-card">
                 <img
                     src=""
                     alt=""

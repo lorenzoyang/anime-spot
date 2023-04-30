@@ -13,6 +13,7 @@
 
         <link rel="stylesheet" type="text/css" href="./css/style.css" />
         <script src="./js/index.js" type="module" defer></script>
+        <script src="./js/anime-modal.js" type="module" defer></script>
     </head>
     <body>
         <!-- navbar -->
@@ -137,11 +138,6 @@
                                 id="anime-quote-title"
                             ></footer>
                         </blockquote>
-                        <p>
-                            <a href="#" class="btn btn-primary my-2"
-                                >Anime details</a
-                            >
-                        </p>
                     </div>
                 </div>
             </section>
@@ -152,13 +148,15 @@
                 class="modal fade"
                 id="anime-modal"
                 tabindex="-1"
-                aria-labelledby="anime-modal-label"
+                aria-labelledby="modal-title"
                 aria-hidden="true"
             >
-                <div class="modal-dialog modal-dialog-centered">
+                <div
+                    class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                >
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="anime-modal-label">
+                            <h5 class="modal-title" id="modal-title">
                                 Anime Title
                             </h5>
                             <button
@@ -169,12 +167,12 @@
                             ></button>
                         </div>
                         <div class="modal-body">
-                            <div class="anime-image-container">
-                                <img src="" alt="" class="anime-image" />
+                            <div class="">
+                                <img src="" alt="" class="" id="modal-image" />
                             </div>
                             <div class="anime-details-container">
-                                <h6 class="anime-details-title">Details</h6>
-                                <p class="anime-details-text">
+                                <h6 class="">Details</h6>
+                                <p class="" id="modal-details">
                                     Description goes here.
                                 </p>
                             </div>
@@ -198,7 +196,7 @@
                         id="anime-list-container"
                     >
                         <!-- <div class="col">
-                            <div class="card shadow-sm h-100">
+                            <div class="card shadow-sm h-100 clickable-card">
                                 <img
                                     src=""
                                     alt=""
