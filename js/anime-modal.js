@@ -43,5 +43,10 @@ function displayAnimeModal(anime) {
         focus: true,
     });
 
+    modal._element.addEventListener("hidden.bs.modal", () => {
+        const modalGenres = document.querySelector("#modal-genres");
+        modalGenres.innerHTML = "";
+    });
+
     modal.show();
 }
