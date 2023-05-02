@@ -1,8 +1,4 @@
-import * as AnimeAlbum from "./modules/anime-album.js";
-
-AnimeAlbum.setModalWindowHandler(displayAnimeModal);
-
-function displayAnimeModal(anime) {
+export function displayAnimeModalCallback(anime) {
     // title
     const modalTitle = document.querySelector("#modal-title");
     modalTitle.textContent = anime.title;
