@@ -53,7 +53,7 @@ import * as Utils from "./utils.js";
  * @type {number}
  *
  */
-export const MAX_LIMIT = 25;
+const MAX_LIMIT = 25;
 
 /**
  * Gets the top anime list.
@@ -68,7 +68,7 @@ export const MAX_LIMIT = 25;
  *
  * @returns {Promise<Object>} A Promise that resolves to an object containing the top anime data and a boolean indicating if there is a next page.
  */
-export async function getTopAnimes(page, filter) {
+async function getTopAnimes(page, filter) {
     const url = createUrlQuery(jikanBaseUrl, "/top/anime", {
         page: page,
         filter: filter,
@@ -96,7 +96,7 @@ export async function getTopAnimes(page, filter) {
  *
  * @returns {Promise<Array>} A Promise that resolves to an array of anime data. 25 items per search.
  */
-export async function searchAnimeByName(name) {
+async function searchAnimeByName(name) {
     const url = createUrlQuery(jikanBaseUrl, "/anime", {
         q: name,
     });
@@ -115,7 +115,7 @@ export async function searchAnimeByName(name) {
  *
  * @returns {Promise<object>} - A Promise that resolves to a JSON object containing the anime, character, and quote.
  */
-export async function getRandomAnimeQuote() {
+async function getRandomAnimeQuote() {
     const url = createUrlQuery(animechanBaseUrl, "/random");
 
     const jsonResponse = await makeHttpRequest(url);
@@ -136,7 +136,7 @@ export async function getRandomAnimeQuote() {
  *
  * @returns {Promise<object>} - A Promise that resolves to an object with the anime, character, and quote properties of the fetched quote.
  */
-export async function getRandomQuoteByAnime(animeTitle) {
+async function getRandomQuoteByAnime(animeTitle) {
     const url = createUrlQuery(animechanBaseUrl, "/random/anime", {
         title: animeTitle,
     });
@@ -151,7 +151,7 @@ export async function getRandomQuoteByAnime(animeTitle) {
 }
 
 // ****************************************************************************************************
-// * helper functions
+// * private functions
 // ****************************************************************************************************
 
 // url di base
@@ -304,3 +304,11 @@ async function makeHttpRequest(url) {
         console.error(`Could not get data: ${error}`);
     }
 }
+
+export {
+    MAX_LIMIT,
+    getTopAnimes,
+    searchAnimeByName,
+    getRandomAnimeQuote,
+    getRandomQuoteByAnime,
+};
