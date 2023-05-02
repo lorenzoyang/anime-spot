@@ -9,7 +9,7 @@
  *
  * @param {Object} anime - The anime object containing information to display
  */
-function displayAnimeModalCallback(anime) {
+function animeModalContentCallback(anime) {
     // title
     const modalTitle = document.querySelector("#modal-title");
     modalTitle.textContent = anime.title;
@@ -58,4 +58,5 @@ function displayAnimeModalCallback(anime) {
     modal.show();
 }
 
-export { displayAnimeModalCallback };
+// Export the variables and functions for use in other modules.
+export { animeModalContentCallback };

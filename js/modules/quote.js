@@ -34,4 +34,5 @@ async function displayAnimeQuote() {
     animeQuoteTitle.innerHTML = `<strong>${animeQuote.character}</strong> <small>from</small> <strong>${animeQuote.anime}</strong>`;
 }
 
+// Export the variables and functions for use in other modules.
 export { displayAnimeQuote };

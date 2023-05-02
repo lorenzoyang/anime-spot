@@ -30,7 +30,7 @@
  * Ad esempio, se si impostano "limit" su 20, l'API restituirà solo i primi 20 risultati.
  * Questo può essere utile se si desidera limitare il tempo di risposta dell'API o se si desidera solo un numero limitato di risultati.
  *
- * ****************************************************************************************************************************************
+ * ============================================================================================================================================
  *
  * ! Animechan API
  * ? Site: https://animechan.vercel.app/
@@ -150,9 +150,9 @@ async function getRandomQuoteByAnime(animeTitle) {
     return jsonResponse;
 }
 
-// ****************************************************************************************************
+// * ======================================================================================================================================
 // * private functions
-// ****************************************************************************************************
+// * ======================================================================================================================================
 
 // url di base
 const jikanBaseUrl = "https://api.jikan.moe/v4";
@@ -305,6 +305,7 @@ async function makeHttpRequest(url) {
     }
 }
 
+// Export the variables and functions for use in other modules.
 export {
     MAX_LIMIT,
     getTopAnimes,

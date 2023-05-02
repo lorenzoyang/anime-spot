@@ -1,157 +1,84 @@
 import * as AnimeContainer from "./modules/anime-container.js";
-import * as AnimeApi from "./modules/anime-api.js";
-import { displayAnimeModalCallback } from "./modules/anime-modal.js";
+import * as Homepage from "./modules/homepage.js";
+import * as ModalWindow from "./modules/modalWIndow.js";
+import * as SearchBar from "./modules/searchBar.js";
+import * as Quote from "./modules/quote.js";
 
-// Radio button object containing all radio buttons in the HTML
-const radioBtns = {
-    airing: document.querySelector("#option1-airing"),
-    upcoming: document.querySelector("#option2-upcoming"),
-    favorite: document.querySelector("#option3-favorite"),
-    bypopularity: document.querySelector("#option4-popularity"),
-};
+// * ====================================================================================================
+// * Set up the AnimeContainer with these templates and callbacks.
+// * ====================================================================================================
 
-// anime list cahce object
-const animeCache = {
-    airing: { animeList: [], page: 1, hasNextPage: true },
-    upcoming: { animeList: [], page: 1, hasNextPage: true },
-    favorite: { animeList: [], page: 1, hasNextPage: true },
-    bypopularity: { animeList: [], page: 1, hasNextPage: true },
+// Set the AnimeCard template to use the one from the Homepage.
+AnimeContainer.setAnimeCardTemplate(Homepage.ANIME_CARD_TEMPLATE);
 
-    searchResult: { animeList: [] },
-};
+// Set the content callback for the AnimeCard to use the one from the Homepage.
+AnimeContainer.setAnimeCardContentCallback(Homepage.animeCardContentCallback);
 
-// ******************************************************
-// * setup of anime container module
-// ******************************************************
+// Set the content callback for the AnimeModal to use the one from the ModalWindow.
+AnimeContainer.setAnimeModalContentCallback(
+    ModalWindow.animeModalContentCallback
+);
 
-// setup AnimeCardTempolate
-AnimeContainer.setAnimeCardTemplate(`
-    <div class="card shadow-sm h-100 clickable-card">
-        <img
-            src=""
-            alt=""
-            class="card-img-top img-fluid"
-        />
-        <div class="card-body">
-            <p class="card-text"></p>
-        </div>
-    </div>
-`);
+// * ====================================================================================================
+// * Set up event listeners for the Homepage.
+// * ====================================================================================================
 
-// setup displayAnimeCardCallback
-AnimeContainer.setDisplayAnimeCardCallback((card, anime) => {
-    const MAX_TITLE_LENGTH = 18;
-    const img = card.querySelector("img");
-    const title = card.querySelector(".card-text");
+// Initialize the predefined anime cards on page load.
+window.addEventListener("load", Homepage.initHomepage);
 
-    img.src = anime.images.jpg.large_image_url;
-    img.alt = anime.title;
-
-    const animeTitle =
-        anime.title.length > MAX_TITLE_LENGTH
-            ? anime.title.substring(0, MAX_TITLE_LENGTH) + "..."
-            : anime.title;
-    title.innerHTML = `<strong>${animeTitle}</strong>`;
-});
-
-// setup displayAnimeModalCallback
-AnimeContainer.setDisplayAnimeModalCallback(displayAnimeModalCallback);
-
-// ******************************************************
-// * helper functions
-// ******************************************************
-
-// function for lazy load anime list
-async function lazyLoadAnimeList(filter) {
-    if (animeCache[filter].animeList.length === 0) {
-        const result = await AnimeApi.getTopAnimes(
-            animeCache[filter].page,
-            filter
-        );
-        animeCache[filter].animeList = result.data;
-        animeCache[filter].page++;
-        animeCache[filter].hasNextPage = result.hasNextPage;
-    }
+// Update anime cards when radio buttons are selected.
+for (const key in Homepage.radioBtns) {
+    Homepage.radioBtns[key].addEventListener(
+        "change",
+        Homepage.updateAnimeCardsOnRadioBtn
+    );
 }
 
-// Update anime cards based on the selected radio button
-async function updateAnimeCardsOnRadioBtn() {
-    let filter;
-    switch (true) {
-        case radioBtns.airing.checked:
-            filter = "airing";
-            break;
-        case radioBtns.upcoming.checked:
-            filter = "upcoming";
-            break;
-        case radioBtns.favorite.checked:
-            filter = "favorite";
-            break;
-        case radioBtns.bypopularity.checked:
-            filter = "bypopularity";
-            break;
-        default:
-            throw new Error("Invalid radio button selection");
-    }
-    await lazyLoadAnimeList(filter);
-    AnimeContainer.displayAnimeCards(animeCache[filter].animeList);
-}
-
-// function to expand anime list
-async function expandAnimeList(filter) {
-    if (animeCache[filter].hasNextPage) {
-        let result = await AnimeApi.getTopAnimes(
-            animeCache[filter].page,
-            filter
-        );
-
-        animeCache[filter].animeList = animeCache[filter].animeList.concat(
-            result.data
-        );
-        animeCache[filter].page++;
-        animeCache[filter].hasNextPage = result.hasNextPage;
-    }
-}
-
-// Expand anime cards based on the selected radio button
-async function expandAnimeCardsOnRadioBtn() {
-    let filter;
-    switch (true) {
-        case radioBtns.airing.checked:
-            filter = "airing";
-            break;
-        case radioBtns.upcoming.checked:
-            filter = "upcoming";
-            break;
-        case radioBtns.favorite.checked:
-            filter = "favorite";
-            break;
-        case radioBtns.bypopularity.checked:
-            filter = "bypopularity";
-            break;
-        default:
-            throw new Error("Invalid radio button selection");
-    }
-    const oldLength = animeCache[filter].animeList.length;
-    await expandAnimeList(filter);
-    AnimeContainer.displayAnimeCards(animeCache[filter].animeList, oldLength);
-}
-
-// ******************************************************
-// * setup of the entry point of the application
-// ******************************************************
-
-// setup predefined anime cards of home page
-window.addEventListener("load", async () => {
-    await lazyLoadAnimeList("airing");
-    AnimeContainer.displayAnimeCards(animeCache.airing.animeList);
-});
-
-// Adding event listener to each radio button, to update anime cards based on radio button selection
-for (const key in radioBtns) {
-    radioBtns[key].addEventListener("change", updateAnimeCardsOnRadioBtn);
-}
-
+// Expand anime cards when "Load More" button is clicked.
 document.querySelector("#load-more-btn").addEventListener("click", () => {
-    expandAnimeCardsOnRadioBtn();
+    Homepage.expandAnimeCardsOnRadioBtn();
+});
+
+// * ====================================================================================================
+// * Set up event listeners for the search bar and search form on the homepage.
+// * ====================================================================================================
+
+const searchBar = document.querySelector("#search-bar");
+const searchForm = document.querySelector("#search-form");
+
+const loadMoreBtn = document.querySelector("#load-more-btn");
+
+let submited = false;
+
+// When the search form is submitted, display anime cards based on the search query.
+searchForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    loadMoreBtn.disabled = true;
+
+    AnimeContainer.displayAnimeCards(
+        await SearchBar.getAnimeSearchResults(searchBar)
+    );
+
+    submited = true;
+});
+
+// When the search bar input changes, reset the anime cards on the homepage if the search form has been submitted and the search bar is empty.
+searchBar.addEventListener("input", () => {
+    if (submited) {
+        if (searchBar.value === "") {
+            submited = false;
+            loadMoreBtn.disabled = false;
+            Homepage.updateAnimeCardsOnRadioBtn();
+        }
+    }
+});
+
+// * ====================================================================================================
+// * random anime quote
+// * ====================================================================================================
+
+// Display a random anime quote when the window loads.
+window.addEventListener("load", () => {
+    Quote.displayAnimeQuote();
 });

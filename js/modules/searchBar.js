@@ -39,4 +39,5 @@ async function getAnimeSearchResults(searchBar) {
     return searchResults;
 }
 
+// Export the variables and functions for use in other modules.
 export { getAnimeSearchResults };

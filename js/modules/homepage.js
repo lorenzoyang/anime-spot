@@ -164,9 +164,9 @@ async function expandAnimeCardsOnRadioBtn() {
     AnimeContainer.displayAnimeCards(animeCache[filter].animeList, oldLength);
 }
 
-// ****************************************************************************************************
+// * ====================================================================================================
 // * anime card
-// ****************************************************************************************************
+// * ====================================================================================================
 
 /**
  * A template string representing the HTML structure for an anime card.
@@ -193,7 +193,7 @@ const ANIME_CARD_TEMPLATE = `
  * @param {HTMLElement} card - The HTML element representing the anime card.
  * @param {object} anime - The anime data to be displayed on the card.
  */
-function displayAnimeCardCallback(card, anime) {
+function animeCardContentCallback(card, anime) {
     const MAX_TITLE_LENGTH = 18;
     const img = card.querySelector("img");
     const title = card.querySelector(".card-text");
@@ -215,5 +215,5 @@ export {
     updateAnimeCardsOnRadioBtn,
     expandAnimeCardsOnRadioBtn,
     ANIME_CARD_TEMPLATE,
-    displayAnimeCardCallback,
+    animeCardContentCallback,
 };
