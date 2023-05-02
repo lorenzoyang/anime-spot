@@ -3,7 +3,7 @@
  * @module AnimeContainer
  */
 
-export function displayAnimeCards(animeList, from = 0) {
+function displayAnimeCards(animeList, from = 0) {
     if (!animeCardTemplate) {
         throw new Error("Anime card template not set");
     }
@@ -33,21 +33,21 @@ export function displayAnimeCards(animeList, from = 0) {
 // anime card html template
 let animeCardTemplate;
 
-export function setAnimeCardTemplate(template) {
+function setAnimeCardTemplate(template) {
     animeCardTemplate = template;
 }
 
 // function(card, anime)
 let displayAnimeCardCallback;
 
-export function setDisplayAnimeCardCallback(callback) {
+function setDisplayAnimeCardCallback(callback) {
     displayAnimeCardCallback = callback;
 }
 
 // function(anime)
 let displayAnimeModalCallback;
 
-export function setDisplayAnimeModalCallback(callback) {
+function setDisplayAnimeModalCallback(callback) {
     displayAnimeModalCallback = callback;
 }
 
@@ -105,3 +105,10 @@ function resizeAnimeCards(animeList) {
         return;
     }
 }
+
+export {
+    displayAnimeCards,
+    setAnimeCardTemplate,
+    setDisplayAnimeCardCallback,
+    setDisplayAnimeModalCallback,
+};
