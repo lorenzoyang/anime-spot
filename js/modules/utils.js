@@ -4,23 +4,38 @@
  * @module Utils
  */
 
+/**
+ * A boolean flag indicating whether or not debugging is enabled.
+ *
+ * @type {boolean}
+ */
 const DEBUG_FLAG = true;
 
 /**
  * Prints a debug message to the console.
  *
  * @param {string} msg - The debug message to print.
+ * @param {Object} [obj] - An object to print along with the debug message.
  * @param {Object} [options] - An object containing optional parameters.
  * @param {string} [options.color="blue"] - The color of the debug message.
  * @param {Function} [options.predicate] - A function that returns a boolean indicating whether or not the debug message should be printed.
  * @param {string} [options.passed] - The message to print if the predicate function returns true.
  * @param {string} [options.failed] - The message to print if the predicate function returns false.
+ * @param {Array<string>} [options.properties] - An array of property names to include in the output.
  */
-export function debug(msg, options = {}) {
+function debug(msg, obj = undefined, options = {}) {
     if (DEBUG_FLAG) {
-        let { color = "blue", predicate, passed, failed } = options;
+        let { color = "blue", predicate, passed, failed, properties } = options;
 
-        let output = `[DEBUG: ${getCallerName()}]: ${msg}`;
+        let output = `[DEBUG (${getCallerName()})] ${msg}`;
+
+        if (obj) {
+            if (properties && properties.length > 0) {
+                output += ": " + JSON.stringify(obj, properties, 2);
+            } else {
+                output += ": " + JSON.stringify(obj, null, 2);
+            }
+        }
 
         if (predicate) {
             const result = predicate();
@@ -29,6 +44,7 @@ export function debug(msg, options = {}) {
                 : ` -> FAILED: ${failed}`;
             color = result ? "green" : "red";
         }
+
         console.log(`%c${output}`, `color: ${color}`);
     }
 }
@@ -54,3 +70,6 @@ function getCallerName() {
 
     return callerName;
 }
+
+// Export the variables and functions for use in other modules.
+export { debug };

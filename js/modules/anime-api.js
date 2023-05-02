@@ -30,7 +30,7 @@
  * Ad esempio, se si impostano "limit" su 20, l'API restituirà solo i primi 20 risultati.
  * Questo può essere utile se si desidera limitare il tempo di risposta dell'API o se si desidera solo un numero limitato di risultati.
  *
- * ****************************************************************************************************************************************
+ * ============================================================================================================================================
  *
  * ! Animechan API
  * ? Site: https://animechan.vercel.app/
@@ -53,7 +53,7 @@ import * as Utils from "./utils.js";
  * @type {number}
  *
  */
-export const MAX_LIMIT = 25;
+const MAX_LIMIT = 25;
 
 /**
  * Gets the top anime list.
@@ -68,7 +68,7 @@ export const MAX_LIMIT = 25;
  *
  * @returns {Promise<Object>} A Promise that resolves to an object containing the top anime data and a boolean indicating if there is a next page.
  */
-export async function getTopAnimes(page, filter) {
+async function getTopAnimes(page, filter) {
     const url = createUrlQuery(jikanBaseUrl, "/top/anime", {
         page: page,
         filter: filter,
@@ -77,7 +77,7 @@ export async function getTopAnimes(page, filter) {
 
     const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(`called`);
+    Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
 
     return {
         data: jsonResponse.data,
@@ -96,14 +96,14 @@ export async function getTopAnimes(page, filter) {
  *
  * @returns {Promise<Array>} A Promise that resolves to an array of anime data. 25 items per search.
  */
-export async function searchAnimeByName(name) {
+async function searchAnimeByName(name) {
     const url = createUrlQuery(jikanBaseUrl, "/anime", {
         q: name,
     });
 
     const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(`called`);
+    Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
 
     return jsonResponse.data;
 }
@@ -115,14 +115,12 @@ export async function searchAnimeByName(name) {
  *
  * @returns {Promise<object>} - A Promise that resolves to a JSON object containing the anime, character, and quote.
  */
-export async function getRandomAnimeQuote() {
+async function getRandomAnimeQuote() {
     const url = createUrlQuery(animechanBaseUrl, "/random");
 
     const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(
-        `anime: "${jsonResponse.anime}", character: "${jsonResponse.character}", quote: "${jsonResponse.quote}"`
-    );
+    Utils.debug(`called`, jsonResponse);
 
     return jsonResponse;
 }
@@ -136,23 +134,21 @@ export async function getRandomAnimeQuote() {
  *
  * @returns {Promise<object>} - A Promise that resolves to an object with the anime, character, and quote properties of the fetched quote.
  */
-export async function getRandomQuoteByAnime(animeTitle) {
+async function getRandomQuoteByAnime(animeTitle) {
     const url = createUrlQuery(animechanBaseUrl, "/random/anime", {
         title: animeTitle,
     });
 
     const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(
-        `anime: "${jsonResponse.anime}", character: "${jsonResponse.character}", quote: "${jsonResponse.quote}"`
-    );
+    Utils.debug(`called`, jsonResponse);
 
     return jsonResponse;
 }
 
-// ****************************************************************************************************
-// * helper functions
-// ****************************************************************************************************
+// * ======================================================================================================================================
+// * private functions
+// * ======================================================================================================================================
 
 // url di base
 const jikanBaseUrl = "https://api.jikan.moe/v4";
@@ -272,7 +268,7 @@ function validateParameters(baseUrl, parameters) {
             throw new Error(`Invalid title: ${title}`);
         }
 
-        Utils.debug(`title: ${title}`);
+        Utils.debug(`title (anime name): ${title}`);
 
         return { title };
     } else {
@@ -304,3 +300,12 @@ async function makeHttpRequest(url) {
         console.error(`Could not get data: ${error}`);
     }
 }
+
+// Export the variables and functions for use in other modules.
+export {
+    MAX_LIMIT,
+    getTopAnimes,
+    searchAnimeByName,
+    getRandomAnimeQuote,
+    getRandomQuoteByAnime,
+};

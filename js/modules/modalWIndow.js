@@ -1,8 +1,15 @@
-import * as AnimeAlbum from "./modules/anime-album.js";
+/**
+ * Module for providing functionality for displaying modal windows
+ *
+ * @module ModalWindow
+ */
 
-AnimeAlbum.setModalWindowHandler(displayAnimeModal);
-
-function displayAnimeModal(anime) {
+/**
+ * Displays the anime modal with information about the anime
+ *
+ * @param {Object} anime - The anime object containing information to display
+ */
+function animeModalContentCallback(anime) {
     // title
     const modalTitle = document.querySelector("#modal-title");
     modalTitle.textContent = anime.title;
@@ -50,3 +57,6 @@ function displayAnimeModal(anime) {
 
     modal.show();
 }
+
+// Export the variables and functions for use in other modules.
+export { animeModalContentCallback };
