@@ -4,6 +4,8 @@
  * @module AnimeContainer
  */
 
+import * as Utils from "./utils.js";
+
 /**
  * Displays anime cards based on the provided anime list starting from the given index.
  *
@@ -28,6 +30,8 @@ function displayAnimeCards(animeList, from = 0) {
     }
 
     resizeAnimeCards(animeList);
+
+    Utils.debug(`from: ${from}, animeList.length: ${animeList.length}`);
 
     let cardIndex = from;
     animeList.slice(from, animeList.length).forEach((anime) => {
@@ -156,13 +160,19 @@ function resizeAnimeCards(animeList) {
     const listCount = animeList.length;
     const cardCount = getAnimeCards().length;
 
+    Utils.debug(`before: listCount: ${listCount}, cardCount: ${cardCount}`);
+
     if (listCount > cardCount) {
         appendAnimeCardsFor(listCount - cardCount);
     } else if (listCount < cardCount) {
         removeAnimeCardsFrom(listCount);
-    } else {
-        return;
     }
+
+    Utils.debug(
+        `after: listCount: ${animeList.length}, cardCount: ${
+            getAnimeCards().length
+        }`
+    );
 }
 
 // Export the variables and functions for use in other modules.

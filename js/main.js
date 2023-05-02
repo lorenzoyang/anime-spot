@@ -35,9 +35,9 @@ for (const key in Homepage.radioBtns) {
 }
 
 // Expand anime cards when "Load More" button is clicked.
-document.querySelector("#load-more-btn").addEventListener("click", () => {
-    Homepage.expandAnimeCardsOnRadioBtn();
-});
+document
+    .querySelector("#load-more-btn")
+    .addEventListener("click", Homepage.expandAnimeCardsOnRadioBtn);
 
 // * ====================================================================================================
 // * Set up event listeners for the search bar and search form on the homepage.

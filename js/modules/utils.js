@@ -4,12 +4,18 @@
  * @module Utils
  */
 
+/**
+ * A boolean flag indicating whether or not debugging is enabled.
+ *
+ * @type {boolean}
+ */
 const DEBUG_FLAG = true;
 
 /**
  * Prints a debug message to the console.
  *
  * @param {string} msg - The debug message to print.
+ * @param {Object} [obj] - An object to print along with the debug message.
  * @param {Object} [options] - An object containing optional parameters.
  * @param {string} [options.color="blue"] - The color of the debug message.
  * @param {Function} [options.predicate] - A function that returns a boolean indicating whether or not the debug message should be printed.

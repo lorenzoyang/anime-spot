@@ -77,7 +77,7 @@ async function getTopAnimes(page, filter) {
 
     const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(`called`);
+    Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
 
     return {
         data: jsonResponse.data,
@@ -103,7 +103,7 @@ async function searchAnimeByName(name) {
 
     const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(`called`);
+    Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
 
     return jsonResponse.data;
 }
@@ -120,9 +120,7 @@ async function getRandomAnimeQuote() {
 
     const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(
-        `anime: "${jsonResponse.anime}", character: "${jsonResponse.character}", quote: "${jsonResponse.quote}"`
-    );
+    Utils.debug(`called`, jsonResponse);
 
     return jsonResponse;
 }
@@ -143,9 +141,7 @@ async function getRandomQuoteByAnime(animeTitle) {
 
     const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(
-        `anime: "${jsonResponse.anime}", character: "${jsonResponse.character}", quote: "${jsonResponse.quote}"`
-    );
+    Utils.debug(`called`, jsonResponse);
 
     return jsonResponse;
 }
@@ -272,7 +268,7 @@ function validateParameters(baseUrl, parameters) {
             throw new Error(`Invalid title: ${title}`);
         }
 
-        Utils.debug(`title: ${title}`);
+        Utils.debug(`title (anime name): ${title}`);
 
         return { title };
     } else {
