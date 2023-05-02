@@ -1,5 +1,6 @@
 /**
  * Module for providing functionality for displaying modal windows
+ *
  * @module ModalWindow
  */
 
