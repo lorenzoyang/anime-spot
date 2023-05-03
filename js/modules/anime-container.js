@@ -85,6 +85,8 @@ function setAnimeCardContentCallback(callback) {
  *
  * @callback animeModalContentCallback
  *
+ * @async
+ *
  * @param {Object} anime - The anime object to be displayed in the modal
  */
 let animeModalContentCallback;

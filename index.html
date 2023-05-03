@@ -12,7 +12,7 @@
         />
 
         <link rel="stylesheet" type="text/css" href="./css/style.css" />
-        <link rel="stylesheet" href="./css/anime-modal.css" />
+        <link rel="stylesheet" href="./css/modalWindow.css" />
         <script src="./js/main.js" type="module" defer></script>
     </head>
     <body>
@@ -84,7 +84,7 @@
                             class="btn-group btn-group-toggle mt-3 mt-md-0"
                             data-toggle="buttons"
                         >
-                            <label class="btn active border-0 bg-light">
+                            <label class="btn active bg-light">
                                 <input
                                     type="radio"
                                     name="options"
@@ -159,7 +159,7 @@
                             <h5 class="modal-title" id="modal-title"></h5>
                             <button
                                 type="button"
-                                class="btn-close"
+                                class="btn-close btn-close-white"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
                             ></button>
@@ -176,7 +176,7 @@
                                         />
                                     </div>
                                     <div class="mt-2">
-                                        <p class="text-body-secondary mb-1">
+                                        <p class="text-body-primary mb-1">
                                             <strong>Genres:</strong>
                                         </p>
                                         <ul
@@ -187,7 +187,31 @@
 
                                     <div class="mt-2">
                                         <p
-                                            class="text-body-secondary mb-1 d-inline-block"
+                                            class="text-body-primary mb-1 d-inline-block"
+                                        >
+                                            <strong>Type:</strong>
+                                        </p>
+                                        <p
+                                            class="mb-0 d-inline-block ml-2"
+                                            id="modal-type"
+                                        ></p>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <p
+                                            class="text-body-primary mb-1 d-inline-block"
+                                        >
+                                            <strong>Status:</strong>
+                                        </p>
+                                        <p
+                                            class="mb-0 d-inline-block ml-2"
+                                            id="modal-status"
+                                        ></p>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <p
+                                            class="text-body-primary mb-1 d-inline-block"
                                         >
                                             <strong>Rank:</strong>
                                         </p>
@@ -199,7 +223,7 @@
 
                                     <div class="mt-2">
                                         <p
-                                            class="text-body-secondary mb-1 d-inline-block"
+                                            class="text-body-primary mb-1 d-inline-block"
                                         >
                                             <strong>Score:</strong>
                                         </p>
@@ -210,7 +234,7 @@
                                     </div>
 
                                     <div class="mt-2">
-                                        <p class="text-body-secondary mb-1">
+                                        <p class="text-body-primary mb-1">
                                             <strong>Rating:</strong>
                                         </p>
                                         <p class="mb-0" id="modal-rating"></p>
@@ -218,7 +242,22 @@
                                 </div>
                                 <!-- ------------------------------------------ -->
                                 <div class="col-md-8">
-                                    <p class="" id="modal-synopsis"></p>
+                                    <p
+                                        id="modal-synopsis"
+                                        class="text-justify"
+                                    ></p>
+                                    <hr />
+                                    <div>
+                                        <!-- streaming links -->
+                                        <p>
+                                            <strong>Anime streaming:</strong>
+                                        </p>
+                                        <ul
+                                            class="list-unstyled list-inline"
+                                            id="modal-watch-links"
+                                        ></ul>
+                                        <!-- end streaming links-->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -230,12 +269,6 @@
 
             <div class="album py-5 pt-0">
                 <div class="container">
-                    <!---------------------------------------------------------------------------------------------------------------->
-                    <!--The g-3 class in Bootstrap is used to add spacing between elements. 
-                        In this case, it is adding a 3-unit gap (using the rem unit) between the album cards in the row element.-->
-                    <!--row-cols-1 row-cols-sm-2 row-cols-md-3 g-3, mean that 
-                        the row would have 1 column by default, 2 columns on small screens, and 3 columns on medium screens.-->
-                    <!---------------------------------------------------------------------------------------------------------------->
                     <div
                         class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-5"
                         id="anime-list-container"

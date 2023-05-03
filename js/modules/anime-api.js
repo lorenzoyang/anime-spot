@@ -86,6 +86,28 @@ async function getTopAnimes(page, filter) {
 }
 
 /**
+ * This function retrieves anime data by ID.
+ *
+ * @async
+ *
+ * @param {number} id - The ID of the anime to retrieve data for.
+ * @param {boolean} full - Whether or not to retrieve full data for the anime.
+ *
+ * @returns {Object} - The JSON response data for the given anime.
+ */
+async function getAnimeById(id, full = false) {
+    const url = full
+        ? createUrlQuery(jikanBaseUrl, `/anime/${id}/full`)
+        : createUrlQuery(jikanBaseUrl, `/anime/${id}`);
+
+    const jsonResponse = await makeHttpRequest(url);
+
+    Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
+
+    return jsonResponse.data;
+}
+
+/**
  * Searches for anime by name.
  *
  * @async
@@ -305,6 +327,7 @@ async function makeHttpRequest(url) {
 export {
     MAX_LIMIT,
     getTopAnimes,
+    getAnimeById,
     searchAnimeByName,
     getRandomAnimeQuote,
     getRandomQuoteByAnime,
