@@ -12,7 +12,7 @@
         />
 
         <link rel="stylesheet" type="text/css" href="./css/style.css" />
-        <link rel="stylesheet" href="./css/anime-modal.css" />
+        <link rel="stylesheet" href="./css/modalWindow.css" />
         <script src="./js/main.js" type="module" defer></script>
     </head>
     <body>
@@ -155,11 +155,11 @@
                     class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
                 >
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header bg-dark text-light">
                             <h5 class="modal-title" id="modal-title"></h5>
                             <button
                                 type="button"
-                                class="btn-close"
+                                class="btn-close btn-close-white"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
                             ></button>
@@ -183,6 +183,18 @@
                                             class="list-unstyled mb-0"
                                             id="modal-genres"
                                         ></ul>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <p
+                                            class="text-body-secondary mb-1 d-inline-block"
+                                        >
+                                            <strong>Type:</strong>
+                                        </p>
+                                        <p
+                                            class="mb-0 d-inline-block ml-2"
+                                            id="modal-type"
+                                        ></p>
                                     </div>
 
                                     <div class="mt-2">

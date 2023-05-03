@@ -8,4 +8,6 @@
     font-size: 14px;
     font-weight: bold;
     color: #333;
+    /* add left padding for indentation */
+    padding-left: 30px;
 }

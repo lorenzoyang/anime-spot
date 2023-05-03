@@ -4,27 +4,53 @@
  * @module ModalWindow
  */
 
+// anime title
+const modalTitle = document.querySelector("#modal-title");
+
+// anime image
+const modalImage = document.querySelector("#modal-image");
+
+// anime type
+const modalType = document.querySelector("#modal-type");
+
+// anime genres
+const modalGenres = document.querySelector("#modal-genres");
+
+// anime rank
+const modalRank = document.querySelector("#modal-rank");
+
+// anime score
+const modalScore = document.querySelector("#modal-score");
+
+// anime rating
+const modalRating = document.querySelector("#modal-rating");
+
+// anime synopsis
+const modalSynopsis = document.querySelector("#modal-synopsis");
+
+// modal window object
+const modal = new bootstrap.Modal(document.querySelector("#anime-modal"), {
+    keyboard: true,
+    focus: true,
+});
+
 /**
  * Displays the anime modal with information about the anime
  *
  * @param {Object} anime - The anime object containing information to display
  */
 function animeModalContentCallback(anime) {
-    // title
-    const modalTitle = document.querySelector("#modal-title");
+    // anime title
     modalTitle.textContent = anime.title;
 
-    // image
-    const modalImage = document.querySelector("#modal-image");
-    modalImage.src = anime.images.jpg.image_url;
+    // anime image
+    modalImage.src = anime.images.jpg.large_image_url;
     modalImage.alt = anime.title;
 
-    // synopsis
-    const modalSynopsis = document.querySelector("#modal-synopsis");
-    modalSynopsis.textContent = anime.synopsis;
+    // anime type
+    modalType.textContent = anime.type;
 
-    // genres
-    const modalGenres = document.querySelector("#modal-genres");
+    // anime genres
     anime.genres
         .map((genre) => genre.name)
         .forEach((genre) => {
@@ -33,23 +59,21 @@ function animeModalContentCallback(anime) {
             modalGenres.appendChild(newGenre);
         });
 
-    // rank
-    const modalRank = document.querySelector("#modal-rank");
+    // anime rank
     modalRank.textContent = anime.rank;
 
-    // score
-    const modalScore = document.querySelector("#modal-score");
+    // anime score
     modalScore.textContent = anime.score;
 
-    // rating
-    const modalRating = document.querySelector("#modal-rating");
+    // anime rating
     modalRating.textContent = anime.rating;
 
-    const modal = new bootstrap.Modal(document.querySelector("#anime-modal"), {
-        keyboard: true,
-        focus: true,
-    });
+    // anime synopsis
+    modalSynopsis.textContent = anime.synopsis;
 
+    // ==================================================================
+
+    // to clear the genres list after the modal is closed
     modal._element.addEventListener("hidden.bs.modal", () => {
         const modalGenres = document.querySelector("#modal-genres");
         modalGenres.innerHTML = "";
