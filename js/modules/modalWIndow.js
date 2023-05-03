@@ -101,8 +101,10 @@ async function animeModalContentCallback(anime) {
 
     // to clear the genres list after the modal is closed
     modal._element.addEventListener("hidden.bs.modal", () => {
-        const modalGenres = document.querySelector("#modal-genres");
+        // to clear the genres list
         modalGenres.innerHTML = "";
+        // to clear the watch links list
+        modalWatchLinks.innerHTML = "";
     });
 
     modal.show();
