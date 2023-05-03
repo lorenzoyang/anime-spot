@@ -4,6 +4,8 @@
  * @module ModalWindow
  */
 
+import * as AnimeApi from "./anime-api.js";
+
 // anime title
 const modalTitle = document.querySelector("#modal-title");
 
@@ -12,6 +14,9 @@ const modalImage = document.querySelector("#modal-image");
 
 // anime type
 const modalType = document.querySelector("#modal-type");
+
+// anime status
+const modalStatus = document.querySelector("#modal-status");
 
 // anime genres
 const modalGenres = document.querySelector("#modal-genres");
@@ -28,6 +33,9 @@ const modalRating = document.querySelector("#modal-rating");
 // anime synopsis
 const modalSynopsis = document.querySelector("#modal-synopsis");
 
+// anime watch links
+const modalWatchLinks = document.querySelector("#modal-watch-links");
+
 // modal window object
 const modal = new bootstrap.Modal(document.querySelector("#anime-modal"), {
     keyboard: true,
@@ -37,9 +45,11 @@ const modal = new bootstrap.Modal(document.querySelector("#anime-modal"), {
 /**
  * Displays the anime modal with information about the anime
  *
+ * @async
+ *
  * @param {Object} anime - The anime object containing information to display
  */
-function animeModalContentCallback(anime) {
+async function animeModalContentCallback(anime) {
     // anime title
     modalTitle.textContent = anime.title;
 
@@ -49,6 +59,9 @@ function animeModalContentCallback(anime) {
 
     // anime type
     modalType.textContent = anime.type;
+
+    // anime status
+    modalStatus.textContent = anime.status;
 
     // anime genres
     anime.genres
@@ -70,6 +83,19 @@ function animeModalContentCallback(anime) {
 
     // anime synopsis
     modalSynopsis.textContent = anime.synopsis;
+
+    // anime watch links
+    const fullAnime = await AnimeApi.getAnimeById(anime.mal_id, true);
+    fullAnime.streaming.forEach((watchLink) => {
+        const listItem = document.createElement("li");
+        const anchor = document.createElement("a");
+
+        anchor.href = watchLink.url;
+        anchor.textContent = watchLink.name;
+
+        listItem.appendChild(anchor);
+        modalWatchLinks.appendChild(listItem);
+    });
 
     // ==================================================================
 
