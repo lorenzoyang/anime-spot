@@ -127,3 +127,13 @@
     padding: 0.5rem 0.75rem; /* adjust the top and bottom padding to match the button height */
     height: 100%;
 }
+
+/* Add some padding to the top of the section */
+section {
+    padding-top: 50px; /* Adjust this value as needed */
+}
+
+/* Add some margin to the top of the quote text */
+#anime-quote-text {
+    margin-top: 20px; /* Adjust this value as needed */
+}
