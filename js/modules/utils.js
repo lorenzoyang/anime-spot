@@ -9,7 +9,7 @@
  *
  * @type {boolean}
  */
-const DEBUG_FLAG = true;
+const DEBUG_FLAG = false;
 
 /**
  * Prints a debug message to the console.
