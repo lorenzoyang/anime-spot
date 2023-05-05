@@ -4,8 +4,6 @@ This is a web application for finding anime and getting information about them. 
 
 ![homepage](img/homepage.png)
 
-![modalwindow](img/modalwindow.png)
-
 ## Getting Started
 
 To use this application, you need a web browser and an internet connection. **Simply open the index.html file in your browser**, and you should see the homepage of the application.
