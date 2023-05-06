@@ -1,4 +1,4 @@
-# aniSearcher
+# animehub
 
 This is a web application for finding anime and getting information about them. It is built using HTML, JavaScript, CSS, and Bootstrap for the frontend, and the Jikan anime API for the backend.
 
