@@ -4,6 +4,7 @@
  * @module AnimeContainer
  */
 
+import { MAX_LIMIT } from "./anime-api.js";
 import * as Utils from "./utils.js";
 
 /**
@@ -27,6 +28,12 @@ function displayAnimeCards(animeList, from = 0) {
 
     if (!animeModalContentCallback) {
         throw new Error("Display anime modal callback not set");
+    }
+
+    if (animeList.length === 0) {
+        for (let i = 0; i < MAX_LIMIT; i++) {
+            animeList.push(null);
+        }
     }
 
     resizeAnimeCards(animeList);

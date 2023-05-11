@@ -198,14 +198,20 @@ function animeCardContentCallback(card, anime) {
     const img = card.querySelector("img");
     const title = card.querySelector(".card-text");
 
-    img.src = anime.images.jpg.large_image_url;
-    img.alt = anime.title;
+    if (anime) {
+        img.src = anime.images.jpg.large_image_url;
+        img.alt = anime.title;
 
-    const animeTitle =
-        anime.title.length > MAX_TITLE_LENGTH
-            ? anime.title.substring(0, MAX_TITLE_LENGTH) + "..."
-            : anime.title;
-    title.innerHTML = `<strong>${animeTitle}</strong>`;
+        const animeTitle =
+            anime.title.length > MAX_TITLE_LENGTH
+                ? anime.title.substring(0, MAX_TITLE_LENGTH) + "..."
+                : anime.title;
+        title.innerHTML = `<strong>${animeTitle}</strong>`;
+    } else {
+        img.src = "../../img/not-found.jfif";
+        img.alt = "NOT FOUND";
+        title.innerHTML = "<strong>NOT FOUND</strong>";
+    }
 }
 
 // Export the variables and functions for use in other modules.

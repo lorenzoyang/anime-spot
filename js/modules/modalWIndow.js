@@ -50,6 +50,10 @@ const modal = new bootstrap.Modal(document.querySelector("#anime-modal"), {
  * @param {Object} anime - The anime object containing information to display
  */
 async function animeModalContentCallback(anime) {
+    if (!anime) {
+        return;
+    }
+
     // anime title
     modalTitle.textContent = anime.title;
 
