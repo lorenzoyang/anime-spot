@@ -23,10 +23,10 @@ import * as AnimeContainer from "./anime-container.js";
  * @type {RadioButtons}
  */
 const radioBtns = {
-    airing: document.querySelector("#option1-airing"),
-    upcoming: document.querySelector("#option2-upcoming"),
-    favorite: document.querySelector("#option3-favorite"),
-    bypopularity: document.querySelector("#option4-popularity"),
+    airing: document.querySelector("#radio-airing"),
+    upcoming: document.querySelector("#radio-upcoming"),
+    favorite: document.querySelector("#radio-favorite"),
+    bypopularity: document.querySelector("#radio-popularity"),
 };
 
 /**
