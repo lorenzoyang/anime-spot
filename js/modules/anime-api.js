@@ -69,20 +69,20 @@ const MAX_LIMIT = 25;
  * @returns {Promise<Object>} A Promise that resolves to an object containing the top anime data and a boolean indicating if there is a next page.
  */
 async function getTopAnimes(page, filter) {
-    const url = createUrlQuery(jikanBaseUrl, "/top/anime", {
-        page: page,
-        filter: filter,
-        limit: MAX_LIMIT,
-    });
+  const url = createUrlQuery(jikanBaseUrl, "/top/anime", {
+    page: page,
+    filter: filter,
+    limit: MAX_LIMIT,
+  });
 
-    const jsonResponse = await makeHttpRequest(url);
+  const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
+  Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
 
-    return {
-        data: jsonResponse.data,
-        hasNextPage: jsonResponse.pagination.has_next_page,
-    };
+  return {
+    data: jsonResponse.data,
+    hasNextPage: jsonResponse.pagination.has_next_page,
+  };
 }
 
 /**
@@ -96,15 +96,15 @@ async function getTopAnimes(page, filter) {
  * @returns {Object} - The JSON response data for the given anime.
  */
 async function getAnimeById(id, full = false) {
-    const url = full
-        ? createUrlQuery(jikanBaseUrl, `/anime/${id}/full`)
-        : createUrlQuery(jikanBaseUrl, `/anime/${id}`);
+  const url = full
+    ? createUrlQuery(jikanBaseUrl, `/anime/${id}/full`)
+    : createUrlQuery(jikanBaseUrl, `/anime/${id}`);
 
-    const jsonResponse = await makeHttpRequest(url);
+  const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
+  Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
 
-    return jsonResponse.data;
+  return jsonResponse.data;
 }
 
 /**
@@ -119,15 +119,15 @@ async function getAnimeById(id, full = false) {
  * @returns {Promise<Array>} A Promise that resolves to an array of anime data. 25 items per search.
  */
 async function searchAnimeByName(name) {
-    const url = createUrlQuery(jikanBaseUrl, "/anime", {
-        q: name,
-    });
+  const url = createUrlQuery(jikanBaseUrl, "/anime", {
+    q: name,
+  });
 
-    const jsonResponse = await makeHttpRequest(url);
+  const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
+  Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
 
-    return jsonResponse.data;
+  return jsonResponse.data;
 }
 
 /**
@@ -138,13 +138,13 @@ async function searchAnimeByName(name) {
  * @returns {Promise<object>} - A Promise that resolves to a JSON object containing the anime, character, and quote.
  */
 async function getRandomAnimeQuote() {
-    const url = createUrlQuery(animechanBaseUrl, "/random");
+  const url = createUrlQuery(animechanBaseUrl, "/random");
 
-    const jsonResponse = await makeHttpRequest(url);
+  const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(`called`, jsonResponse);
+  Utils.debug(`called`, jsonResponse);
 
-    return jsonResponse;
+  return jsonResponse;
 }
 
 /**
@@ -157,15 +157,15 @@ async function getRandomAnimeQuote() {
  * @returns {Promise<object>} - A Promise that resolves to an object with the anime, character, and quote properties of the fetched quote.
  */
 async function getRandomQuoteByAnime(animeTitle) {
-    const url = createUrlQuery(animechanBaseUrl, "/random/anime", {
-        title: animeTitle,
-    });
+  const url = createUrlQuery(animechanBaseUrl, "/random/anime", {
+    title: animeTitle,
+  });
 
-    const jsonResponse = await makeHttpRequest(url);
+  const jsonResponse = await makeHttpRequest(url);
 
-    Utils.debug(`called`, jsonResponse);
+  Utils.debug(`called`, jsonResponse);
 
-    return jsonResponse;
+  return jsonResponse;
 }
 
 // * ======================================================================================================================================
@@ -200,42 +200,42 @@ const validFilters = ["airing", "upcoming", "bypopularity", "favorite"];
  * @throws {Error} - Throws an error if any of the provided parameters are invalid.
  */
 function createUrlQuery(baseUrl, resourcePath, parameters = {}) {
-    const url = new URL(baseUrl + resourcePath);
-    const searchParams = url.searchParams;
+  const url = new URL(baseUrl + resourcePath);
+  const searchParams = url.searchParams;
 
-    if (baseUrl === jikanBaseUrl) {
-        const { page, limit, type, filter, q } = validateParameters(
-            baseUrl,
-            parameters
-        );
+  if (baseUrl === jikanBaseUrl) {
+    const { page, limit, type, filter, q } = validateParameters(
+      baseUrl,
+      parameters
+    );
 
-        if (page) {
-            searchParams.set("page", page);
-        }
-        if (limit) {
-            searchParams.set("limit", limit);
-        }
-        if (type) {
-            searchParams.set("type", type);
-        }
-        if (filter) {
-            searchParams.set("filter", filter);
-        }
-        if (q) {
-            searchParams.set("q", q);
-        }
-    } else if (baseUrl === animechanBaseUrl) {
-        const { title } = validateParameters(baseUrl, parameters);
-
-        if (title) {
-            searchParams.set("title", title);
-        }
-    } else {
+    if (page) {
+      searchParams.set("page", page);
     }
+    if (limit) {
+      searchParams.set("limit", limit);
+    }
+    if (type) {
+      searchParams.set("type", type);
+    }
+    if (filter) {
+      searchParams.set("filter", filter);
+    }
+    if (q) {
+      searchParams.set("q", q);
+    }
+  } else if (baseUrl === animechanBaseUrl) {
+    const { title } = validateParameters(baseUrl, parameters);
 
-    Utils.debug(url.toString());
+    if (title) {
+      searchParams.set("title", title);
+    }
+  } else {
+  }
 
-    return url.toString();
+  Utils.debug(url.toString());
+
+  return url.toString();
 }
 
 /**
@@ -259,43 +259,43 @@ function createUrlQuery(baseUrl, resourcePath, parameters = {}) {
  * @throws {Error} - Throws an error if any of the provided parameters are invalid.
  */
 function validateParameters(baseUrl, parameters) {
-    if (baseUrl === jikanBaseUrl) {
-        const { page, limit, type, filter, q } = parameters;
+  if (baseUrl === jikanBaseUrl) {
+    const { page, limit, type, filter, q } = parameters;
 
-        if (page && page < 1) {
-            throw new Error(`Invalid page: ${page}`);
-        }
-        if (limit < 1 || limit > MAX_LIMIT) {
-            throw new Error(`Invalid limit: ${limit}`);
-        }
-        if (type && !validTypes.includes(type)) {
-            throw new Error(`Invalid type: ${type}`);
-        }
-        if (filter && !validFilters.includes(filter)) {
-            throw new Error(`Invalid filter: ${filter}`);
-        }
-        if (q && typeof q !== "string") {
-            throw new Error(`Invalid q (name): ${q}`);
-        }
-
-        Utils.debug(
-            `page:${page}, limit:${limit}, type:${type}, filter:${filter}, q:${q}`
-        );
-
-        return { page, limit, type, filter, q };
-    } else if (baseUrl === animechanBaseUrl) {
-        const { title } = parameters;
-
-        if (title && typeof title !== "string") {
-            throw new Error(`Invalid title: ${title}`);
-        }
-
-        Utils.debug(`title (anime name): ${title}`);
-
-        return { title };
-    } else {
-        throw new Error(`Invalid baseUrl: ${baseUrl}`);
+    if (page && page < 1) {
+      throw new Error(`Invalid page: ${page}`);
     }
+    if (limit < 1 || limit > MAX_LIMIT) {
+      throw new Error(`Invalid limit: ${limit}`);
+    }
+    if (type && !validTypes.includes(type)) {
+      throw new Error(`Invalid type: ${type}`);
+    }
+    if (filter && !validFilters.includes(filter)) {
+      throw new Error(`Invalid filter: ${filter}`);
+    }
+    if (q && typeof q !== "string") {
+      throw new Error(`Invalid q (name): ${q}`);
+    }
+
+    Utils.debug(
+      `page:${page}, limit:${limit}, type:${type}, filter:${filter}, q:${q}`
+    );
+
+    return { page, limit, type, filter, q };
+  } else if (baseUrl === animechanBaseUrl) {
+    const { title } = parameters;
+
+    if (title && typeof title !== "string") {
+      throw new Error(`Invalid title: ${title}`);
+    }
+
+    Utils.debug(`title (anime name): ${title}`);
+
+    return { title };
+  } else {
+    throw new Error(`Invalid baseUrl: ${baseUrl}`);
+  }
 }
 
 /**
@@ -310,25 +310,25 @@ function validateParameters(baseUrl, parameters) {
  * @throws {Error} - Throws an error if the response status is not OK.
  */
 async function makeHttpRequest(url) {
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(
-                `HTTP error: ${response.status}, message: ${response.statusText}`
-            );
-        }
-        return await response.json();
-    } catch (error) {
-        console.error(`Could not get data: ${error}`);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(
+        `HTTP error: ${response.status}, message: ${response.statusText}`
+      );
     }
+    return await response.json();
+  } catch (error) {
+    console.error(`Could not get data: ${error}`);
+  }
 }
 
 // Export the variables and functions for use in other modules.
 export {
-    MAX_LIMIT,
-    getTopAnimes,
-    getAnimeById,
-    searchAnimeByName,
-    getRandomAnimeQuote,
-    getRandomQuoteByAnime,
+  MAX_LIMIT,
+  getTopAnimes,
+  getAnimeById,
+  searchAnimeByName,
+  getRandomAnimeQuote,
+  getRandomQuoteByAnime,
 };

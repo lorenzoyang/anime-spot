@@ -23,10 +23,10 @@ import * as AnimeContainer from "./anime-container.js";
  * @type {RadioButtons}
  */
 const radioBtns = {
-    airing: document.querySelector("#radio-airing"),
-    upcoming: document.querySelector("#radio-upcoming"),
-    favorite: document.querySelector("#radio-favorite"),
-    bypopularity: document.querySelector("#radio-popularity"),
+  airing: document.querySelector("#radio-airing"),
+  upcoming: document.querySelector("#radio-upcoming"),
+  favorite: document.querySelector("#radio-favorite"),
+  bypopularity: document.querySelector("#radio-popularity"),
 };
 
 /**
@@ -39,18 +39,18 @@ const radioBtns = {
  * @throws {Error} - If no radio button is selected
  */
 function getRadioBtnSelection(radioBtns) {
-    switch (true) {
-        case radioBtns.airing.checked:
-            return "airing";
-        case radioBtns.upcoming.checked:
-            return "upcoming";
-        case radioBtns.favorite.checked:
-            return "favorite";
-        case radioBtns.bypopularity.checked:
-            return "bypopularity";
-        default:
-            throw new Error("Invalid radio button selection");
-    }
+  switch (true) {
+    case radioBtns.airing.checked:
+      return "airing";
+    case radioBtns.upcoming.checked:
+      return "upcoming";
+    case radioBtns.favorite.checked:
+      return "favorite";
+    case radioBtns.bypopularity.checked:
+      return "bypopularity";
+    default:
+      throw new Error("Invalid radio button selection");
+  }
 }
 
 /**
@@ -73,12 +73,12 @@ function getRadioBtnSelection(radioBtns) {
  * @property {AnimeListCache} searchResult - The cached anime list for the search results
  */
 const animeCache = {
-    airing: { animeList: [], page: 1, hasNextPage: true },
-    upcoming: { animeList: [], page: 1, hasNextPage: true },
-    favorite: { animeList: [], page: 1, hasNextPage: true },
-    bypopularity: { animeList: [], page: 1, hasNextPage: true },
+  airing: { animeList: [], page: 1, hasNextPage: true },
+  upcoming: { animeList: [], page: 1, hasNextPage: true },
+  favorite: { animeList: [], page: 1, hasNextPage: true },
+  bypopularity: { animeList: [], page: 1, hasNextPage: true },
 
-    searchResult: { animeList: [] },
+  searchResult: { animeList: [] },
 };
 
 /**
@@ -89,8 +89,8 @@ const animeCache = {
  * @returns {Promise<void>} A Promise that resolves when the anime list has been fetched and displayed.
  */
 async function initHomepage() {
-    await lazyLoadAnimeList("airing");
-    AnimeContainer.displayAnimeCards(animeCache.airing.animeList);
+  await lazyLoadAnimeList("airing");
+  AnimeContainer.displayAnimeCards(animeCache.airing.animeList);
 }
 
 /**
@@ -103,15 +103,12 @@ async function initHomepage() {
  * @returns {Promise<void>}
  */
 async function lazyLoadAnimeList(filter) {
-    if (animeCache[filter].animeList.length === 0) {
-        const result = await AnimeApi.getTopAnimes(
-            animeCache[filter].page,
-            filter
-        );
-        animeCache[filter].animeList = result.data;
-        animeCache[filter].page++;
-        animeCache[filter].hasNextPage = result.hasNextPage;
-    }
+  if (animeCache[filter].animeList.length === 0) {
+    const result = await AnimeApi.getTopAnimes(animeCache[filter].page, filter);
+    animeCache[filter].animeList = result.data;
+    animeCache[filter].page++;
+    animeCache[filter].hasNextPage = result.hasNextPage;
+  }
 }
 
 /**
@@ -122,9 +119,9 @@ async function lazyLoadAnimeList(filter) {
  * @returns {Promise<void>}
  */
 async function updateAnimeCardsOnRadioBtn() {
-    let filter = getRadioBtnSelection(radioBtns);
-    await lazyLoadAnimeList(filter);
-    AnimeContainer.displayAnimeCards(animeCache[filter].animeList);
+  let filter = getRadioBtnSelection(radioBtns);
+  await lazyLoadAnimeList(filter);
+  AnimeContainer.displayAnimeCards(animeCache[filter].animeList);
 }
 
 /**
@@ -135,18 +132,15 @@ async function updateAnimeCardsOnRadioBtn() {
  * @returns {Promise<void>}
  */
 async function expandAnimeList(filter) {
-    if (animeCache[filter].hasNextPage) {
-        let result = await AnimeApi.getTopAnimes(
-            animeCache[filter].page,
-            filter
-        );
+  if (animeCache[filter].hasNextPage) {
+    let result = await AnimeApi.getTopAnimes(animeCache[filter].page, filter);
 
-        animeCache[filter].animeList = animeCache[filter].animeList.concat(
-            result.data
-        );
-        animeCache[filter].page++;
-        animeCache[filter].hasNextPage = result.hasNextPage;
-    }
+    animeCache[filter].animeList = animeCache[filter].animeList.concat(
+      result.data
+    );
+    animeCache[filter].page++;
+    animeCache[filter].hasNextPage = result.hasNextPage;
+  }
 }
 
 /**
@@ -158,10 +152,10 @@ async function expandAnimeList(filter) {
  * @returns {Promise<void>} - A Promise that resolves when the anime cards are expanded and displayed.
  */
 async function expandAnimeCardsOnRadioBtn() {
-    let filter = getRadioBtnSelection(radioBtns);
-    const oldLength = animeCache[filter].animeList.length;
-    await expandAnimeList(filter);
-    AnimeContainer.displayAnimeCards(animeCache[filter].animeList, oldLength);
+  let filter = getRadioBtnSelection(radioBtns);
+  const oldLength = animeCache[filter].animeList.length;
+  await expandAnimeList(filter);
+  AnimeContainer.displayAnimeCards(animeCache[filter].animeList, oldLength);
 }
 
 // * ====================================================================================================
@@ -194,32 +188,32 @@ const ANIME_CARD_TEMPLATE = `
  * @param {object} anime - The anime data to be displayed on the card.
  */
 function animeCardContentCallback(card, anime) {
-    const MAX_TITLE_LENGTH = 18;
-    const img = card.querySelector("img");
-    const title = card.querySelector(".card-text");
+  const MAX_TITLE_LENGTH = 18;
+  const img = card.querySelector("img");
+  const title = card.querySelector(".card-text");
 
-    if (anime) {
-        img.src = anime.images.jpg.large_image_url;
-        img.alt = anime.title;
+  if (anime) {
+    img.src = anime.images.jpg.large_image_url;
+    img.alt = anime.title;
 
-        const animeTitle =
-            anime.title.length > MAX_TITLE_LENGTH
-                ? anime.title.substring(0, MAX_TITLE_LENGTH) + "..."
-                : anime.title;
-        title.innerHTML = `<strong>${animeTitle}</strong>`;
-    } else {
-        img.src = "../../img/not-found.jfif";
-        img.alt = "NOT FOUND";
-        title.innerHTML = "<strong>NOT FOUND</strong>";
-    }
+    const animeTitle =
+      anime.title.length > MAX_TITLE_LENGTH
+        ? anime.title.substring(0, MAX_TITLE_LENGTH) + "..."
+        : anime.title;
+    title.innerHTML = `<strong>${animeTitle}</strong>`;
+  } else {
+    img.src = "../../img/not-found.jfif";
+    img.alt = "NOT FOUND";
+    title.innerHTML = "<strong>NOT FOUND</strong>";
+  }
 }
 
 // Export the variables and functions for use in other modules.
 export {
-    radioBtns,
-    initHomepage,
-    updateAnimeCardsOnRadioBtn,
-    expandAnimeCardsOnRadioBtn,
-    ANIME_CARD_TEMPLATE,
-    animeCardContentCallback,
+  radioBtns,
+  initHomepage,
+  updateAnimeCardsOnRadioBtn,
+  expandAnimeCardsOnRadioBtn,
+  ANIME_CARD_TEMPLATE,
+  animeCardContentCallback,
 };

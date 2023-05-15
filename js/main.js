@@ -16,7 +16,7 @@ AnimeContainer.setAnimeCardContentCallback(Homepage.animeCardContentCallback);
 
 // Set the content callback for the AnimeModal to use the one from the ModalWindow.
 AnimeContainer.setAnimeModalContentCallback(
-    ModalWindow.animeModalContentCallback
+  ModalWindow.animeModalContentCallback
 );
 
 // * ====================================================================================================
@@ -28,16 +28,16 @@ window.addEventListener("load", Homepage.initHomepage);
 
 // Update anime cards when radio buttons are selected.
 for (const key in Homepage.radioBtns) {
-    Homepage.radioBtns[key].addEventListener(
-        "change",
-        Homepage.updateAnimeCardsOnRadioBtn
-    );
+  Homepage.radioBtns[key].addEventListener(
+    "change",
+    Homepage.updateAnimeCardsOnRadioBtn
+  );
 }
 
 // Expand anime cards when "Load More" button is clicked.
 document
-    .querySelector("#load-more-btn")
-    .addEventListener("click", Homepage.expandAnimeCardsOnRadioBtn);
+  .querySelector("#load-more-btn")
+  .addEventListener("click", Homepage.expandAnimeCardsOnRadioBtn);
 
 // * ====================================================================================================
 // * Set up event listeners for the search bar and search form on the homepage.
@@ -52,26 +52,26 @@ let submited = false;
 
 // When the search form is submitted, display anime cards based on the search query.
 searchForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    loadMoreBtn.disabled = true;
+  loadMoreBtn.disabled = true;
 
-    AnimeContainer.displayAnimeCards(
-        await SearchBar.getAnimeSearchResults(searchBar)
-    );
+  AnimeContainer.displayAnimeCards(
+    await SearchBar.getAnimeSearchResults(searchBar)
+  );
 
-    submited = true;
+  submited = true;
 });
 
 // When the search bar input changes, reset the anime cards on the homepage if the search form has been submitted and the search bar is empty.
 searchBar.addEventListener("input", () => {
-    if (submited) {
-        if (searchBar.value === "") {
-            submited = false;
-            loadMoreBtn.disabled = false;
-            Homepage.updateAnimeCardsOnRadioBtn();
-        }
+  if (submited) {
+    if (searchBar.value === "") {
+      submited = false;
+      loadMoreBtn.disabled = false;
+      Homepage.updateAnimeCardsOnRadioBtn();
     }
+  }
 });
 
 // * ====================================================================================================
@@ -80,5 +80,5 @@ searchBar.addEventListener("input", () => {
 
 // Display a random anime quote when the window loads.
 window.addEventListener("load", () => {
-    Quote.displayAnimeQuote();
+  Quote.displayAnimeQuote();
 });

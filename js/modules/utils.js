@@ -24,29 +24,27 @@ const DEBUG_FLAG = false;
  * @param {Array<string>} [options.properties] - An array of property names to include in the output.
  */
 function debug(msg, obj = undefined, options = {}) {
-    if (DEBUG_FLAG) {
-        let { color = "blue", predicate, passed, failed, properties } = options;
+  if (DEBUG_FLAG) {
+    let { color = "blue", predicate, passed, failed, properties } = options;
 
-        let output = `[DEBUG (${getCallerName()})] ${msg}`;
+    let output = `[DEBUG (${getCallerName()})] ${msg}`;
 
-        if (obj) {
-            if (properties && properties.length > 0) {
-                output += ": " + JSON.stringify(obj, properties, 2);
-            } else {
-                output += ": " + JSON.stringify(obj, null, 2);
-            }
-        }
-
-        if (predicate) {
-            const result = predicate();
-            output += result
-                ? ` -> PASSED: ${passed}`
-                : ` -> FAILED: ${failed}`;
-            color = result ? "green" : "red";
-        }
-
-        console.log(`%c${output}`, `color: ${color}`);
+    if (obj) {
+      if (properties && properties.length > 0) {
+        output += ": " + JSON.stringify(obj, properties, 2);
+      } else {
+        output += ": " + JSON.stringify(obj, null, 2);
+      }
     }
+
+    if (predicate) {
+      const result = predicate();
+      output += result ? ` -> PASSED: ${passed}` : ` -> FAILED: ${failed}`;
+      color = result ? "green" : "red";
+    }
+
+    console.log(`%c${output}`, `color: ${color}`);
+  }
 }
 
 /**
@@ -55,20 +53,20 @@ function debug(msg, obj = undefined, options = {}) {
  * @returns {string} - The name of the calling function.
  */
 function getCallerName() {
-    const error = new Error();
-    const stackTrace = error.stack.split("\n");
+  const error = new Error();
+  const stackTrace = error.stack.split("\n");
 
-    // The first line of the stack trace is the current function,
-    // so we need to take the third line.
-    const callerLine = stackTrace[3].trim();
+  // The first line of the stack trace is the current function,
+  // so we need to take the third line.
+  const callerLine = stackTrace[3].trim();
 
-    // The caller function name is the substring between "at " and " ("
-    const callerName = callerLine.substring(
-        callerLine.indexOf("at ") + 3,
-        callerLine.lastIndexOf(" (")
-    );
+  // The caller function name is the substring between "at " and " ("
+  const callerName = callerLine.substring(
+    callerLine.indexOf("at ") + 3,
+    callerLine.lastIndexOf(" (")
+  );
 
-    return callerName;
+  return callerName;
 }
 
 // Export the variables and functions for use in other modules.

@@ -38,8 +38,8 @@ const modalWatchLinks = document.querySelector("#modal-watch-links");
 
 // modal window object
 const modal = new bootstrap.Modal(document.querySelector("#anime-modal"), {
-    keyboard: true,
-    focus: true,
+  keyboard: true,
+  focus: true,
 });
 
 /**
@@ -50,68 +50,68 @@ const modal = new bootstrap.Modal(document.querySelector("#anime-modal"), {
  * @param {Object} anime - The anime object containing information to display
  */
 async function animeModalContentCallback(anime) {
-    if (!anime) {
-        return;
-    }
+  if (!anime) {
+    return;
+  }
 
-    // anime title
-    modalTitle.textContent = anime.title;
+  // anime title
+  modalTitle.textContent = anime.title;
 
-    // anime image
-    modalImage.src = anime.images.jpg.large_image_url;
-    modalImage.alt = anime.title;
+  // anime image
+  modalImage.src = anime.images.jpg.large_image_url;
+  modalImage.alt = anime.title;
 
-    // anime type
-    modalType.textContent = anime.type;
+  // anime type
+  modalType.textContent = anime.type;
 
-    // anime status
-    modalStatus.textContent = anime.status;
+  // anime status
+  modalStatus.textContent = anime.status;
 
-    // anime genres
-    anime.genres
-        .map((genre) => genre.name)
-        .forEach((genre) => {
-            const newGenre = document.createElement("li");
-            newGenre.textContent = genre;
-            modalGenres.appendChild(newGenre);
-        });
-
-    // anime rank
-    modalRank.textContent = anime.rank;
-
-    // anime score
-    modalScore.textContent = anime.score;
-
-    // anime rating
-    modalRating.textContent = anime.rating;
-
-    // anime synopsis
-    modalSynopsis.textContent = anime.synopsis;
-
-    // anime watch links
-    const fullAnime = await AnimeApi.getAnimeById(anime.mal_id, true);
-    fullAnime.streaming.forEach((watchLink) => {
-        const listItem = document.createElement("li");
-        const anchor = document.createElement("a");
-
-        anchor.href = watchLink.url;
-        anchor.textContent = watchLink.name;
-
-        listItem.appendChild(anchor);
-        modalWatchLinks.appendChild(listItem);
+  // anime genres
+  anime.genres
+    .map((genre) => genre.name)
+    .forEach((genre) => {
+      const newGenre = document.createElement("li");
+      newGenre.textContent = genre;
+      modalGenres.appendChild(newGenre);
     });
 
-    // ==================================================================
+  // anime rank
+  modalRank.textContent = anime.rank;
 
-    // to clear the genres list after the modal is closed
-    modal._element.addEventListener("hidden.bs.modal", () => {
-        // to clear the genres list
-        modalGenres.innerHTML = "";
-        // to clear the watch links list
-        modalWatchLinks.innerHTML = "";
-    });
+  // anime score
+  modalScore.textContent = anime.score;
 
-    modal.show();
+  // anime rating
+  modalRating.textContent = anime.rating;
+
+  // anime synopsis
+  modalSynopsis.textContent = anime.synopsis;
+
+  // anime watch links
+  const fullAnime = await AnimeApi.getAnimeById(anime.mal_id, true);
+  fullAnime.streaming.forEach((watchLink) => {
+    const listItem = document.createElement("li");
+    const anchor = document.createElement("a");
+
+    anchor.href = watchLink.url;
+    anchor.textContent = watchLink.name;
+
+    listItem.appendChild(anchor);
+    modalWatchLinks.appendChild(listItem);
+  });
+
+  // ==================================================================
+
+  // to clear the genres list after the modal is closed
+  modal._element.addEventListener("hidden.bs.modal", () => {
+    // to clear the genres list
+    modalGenres.innerHTML = "";
+    // to clear the watch links list
+    modalWatchLinks.innerHTML = "";
+  });
+
+  modal.show();
 }
 
 // Export the variables and functions for use in other modules.

@@ -25,18 +25,18 @@ const cache = { query: "", searchResults: [] };
  * @returns {Promise<Array>} - A promise that resolves with an array of anime search results
  */
 async function getAnimeSearchResults(searchBar) {
-    const query = searchBar.value.trim().toLowerCase();
+  const query = searchBar.value.trim().toLowerCase();
 
-    if (cache.query === query) {
-        return cache.searchResults;
-    }
+  if (cache.query === query) {
+    return cache.searchResults;
+  }
 
-    const searchResults = await AnimeApi.searchAnimeByName(query);
+  const searchResults = await AnimeApi.searchAnimeByName(query);
 
-    cache.query = query;
-    cache.searchResults = searchResults;
+  cache.query = query;
+  cache.searchResults = searchResults;
 
-    return searchResults;
+  return searchResults;
 }
 
 // Export the variables and functions for use in other modules.

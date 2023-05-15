@@ -28,10 +28,10 @@ const animeQuoteText = document.querySelector("#anime-quote-text");
  * @returns {Promise<void>} Promise that resolves when the anime quote is displayed
  */
 async function displayAnimeQuote() {
-    const animeQuote = await AnimeApi.getRandomAnimeQuote();
-    animeQuoteText.textContent = animeQuote.quote;
-    animeQuoteTitle.innerText = `${animeQuote.character} ${animeQuote.anime}`;
-    animeQuoteTitle.innerHTML = `<strong>${animeQuote.character}</strong> <small>from</small> <strong>${animeQuote.anime}</strong>`;
+  const animeQuote = await AnimeApi.getRandomAnimeQuote();
+  animeQuoteText.textContent = animeQuote.quote;
+  animeQuoteTitle.innerText = `${animeQuote.character} ${animeQuote.anime}`;
+  animeQuoteTitle.innerHTML = `<strong>${animeQuote.character}</strong> <small>from</small> <strong>${animeQuote.anime}</strong>`;
 }
 
 // Export the variables and functions for use in other modules.
