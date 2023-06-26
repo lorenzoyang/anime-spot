@@ -34,7 +34,10 @@
  *
  * ! Animechan API
  * ? Site: https://animechan.vercel.app/
+ *    ! new site: https://animechan.xyz/
+ *
  * ? API documentation: https://animechan.vercel.app/docs
+ *    ! new documentation: https://animechan.xyz/docs
  *
  * ? Important Notes
  * * Default rate limit is 100 requests per hour.
@@ -174,7 +177,9 @@ async function getRandomQuoteByAnime(animeTitle) {
 
 // url di base
 const jikanBaseUrl = "https://api.jikan.moe/v4";
-const animechanBaseUrl = "https://animechan.vercel.app/api";
+// const animechanBaseUrl = "https://animechan.vercel.app/api";
+// ! new base url
+const animechanBaseUrl = "https://animechan.xyz/api";
 
 // serie tv, film, Original Video Animation, speciale, Original Net Animation, musica
 const validTypes = ["tv", "movie", "ova", "special", "ona", "music"];
