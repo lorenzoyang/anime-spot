@@ -29,20 +29,7 @@
  * Il "limit" si riferisce invece al numero massimo di risultati restituiti in una singola richiesta.
  * Ad esempio, se si impostano "limit" su 20, l'API restituirà solo i primi 20 risultati.
  * Questo può essere utile se si desidera limitare il tempo di risposta dell'API o se si desidera solo un numero limitato di risultati.
- *
- * ============================================================================================================================================
- *
- * ! Animechan API
- * ? Site: https://animechan.vercel.app/
- *    ! new site: https://animechan.xyz/
- *
- * ? API documentation: https://animechan.vercel.app/docs
- *    ! new documentation: https://animechan.xyz/docs
- *
- * ? Important Notes
- * * Default rate limit is 100 requests per hour.
- * * Default number of quotes returned from query endpoints is 10.
- *
+ * 
  */
 
 import * as Utils from "./utils.js";
@@ -131,44 +118,6 @@ async function searchAnimeByName(name) {
   Utils.debug(`called`, jsonResponse.data[0], { properties: ["title"] });
 
   return jsonResponse.data;
-}
-
-/**
- * Retrieves a random anime quote from the Animechan API.
- *
- * @async
- *
- * @returns {Promise<object>} - A Promise that resolves to a JSON object containing the anime, character, and quote.
- */
-async function getRandomAnimeQuote() {
-  const url = createUrlQuery(animechanBaseUrl, "/random");
-
-  const jsonResponse = await makeHttpRequest(url);
-
-  Utils.debug(`called`, jsonResponse);
-
-  return jsonResponse;
-}
-
-/**
- * Gets a random quote related to the provided anime title from the Animechan API.
- *
- * @async
- *
- * @param {string} animeTitle - The title of the anime to get a quote for.
- *
- * @returns {Promise<object>} - A Promise that resolves to an object with the anime, character, and quote properties of the fetched quote.
- */
-async function getRandomQuoteByAnime(animeTitle) {
-  const url = createUrlQuery(animechanBaseUrl, "/random/anime", {
-    title: animeTitle,
-  });
-
-  const jsonResponse = await makeHttpRequest(url);
-
-  Utils.debug(`called`, jsonResponse);
-
-  return jsonResponse;
 }
 
 // * ======================================================================================================================================
@@ -334,6 +283,4 @@ export {
   getTopAnimes,
   getAnimeById,
   searchAnimeByName,
-  getRandomAnimeQuote,
-  getRandomQuoteByAnime,
 };

@@ -2,7 +2,6 @@ import * as AnimeContainer from "./modules/anime-container.js";
 import * as Homepage from "./modules/homepage.js";
 import * as ModalWindow from "./modules/modalWIndow.js";
 import * as SearchBar from "./modules/searchBar.js";
-import * as Quote from "./modules/quote.js";
 
 // * ====================================================================================================
 // * Set up the AnimeContainer with these templates and callbacks.
@@ -72,13 +71,4 @@ searchBar.addEventListener("input", () => {
       Homepage.updateAnimeCardsOnRadioBtn();
     }
   }
-});
-
-// * ====================================================================================================
-// * random anime quote
-// * ====================================================================================================
-
-// Display a random anime quote when the window loads.
-window.addEventListener("load", () => {
-  Quote.displayAnimeQuote();
 });
