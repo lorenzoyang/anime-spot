@@ -4,7 +4,7 @@
 
 https://animespot.vercel.app/
 
-This is a web application for finding anime and getting information about them. It is built using HTML, JavaScript, CSS, and Bootstrap for the frontend, and the Jikan anime API for the backend.
+This is a simple web application for finding anime and getting information about them. It was created for study and school homework purposes. The frontend is built using HTML, JavaScript, CSS, and Bootstrap, and it uses the Jikan anime API for the backend.
 
 ## License
 
