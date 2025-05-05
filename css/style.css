@@ -151,3 +151,16 @@ footer a:hover {
 .github-link i {
   color: white;
 }
+
+/* Loading Spinner */
+#loading-spinner {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-border {
+  animation-duration: 0.75s;
+}

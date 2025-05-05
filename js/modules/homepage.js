@@ -89,8 +89,14 @@ const animeCache = {
  * @returns {Promise<void>} A Promise that resolves when the anime list has been fetched and displayed.
  */
 async function initHomepage() {
+  // Show loading spinner (it's already visible by default)
+  document.getElementById("loading-spinner").style.display = "block";
+
   await lazyLoadAnimeList("airing");
   AnimeContainer.displayAnimeCards(animeCache.airing.animeList);
+
+  // Hide loading spinner once data is loaded and displayed
+  document.getElementById("loading-spinner").style.display = "none";
 }
 
 /**
