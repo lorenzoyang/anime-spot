@@ -1,7 +1,6 @@
 /**
  * This module provides functions for making requests
  * to the Jikan API to retrieve anime data.
- * to the Animechan API to retrieve anime quotes.
  *
  * @module AnimeApi
  */
@@ -29,7 +28,7 @@
  * Il "limit" si riferisce invece al numero massimo di risultati restituiti in una singola richiesta.
  * Ad esempio, se si impostano "limit" su 20, l'API restituirà solo i primi 20 risultati.
  * Questo può essere utile se si desidera limitare il tempo di risposta dell'API o se si desidera solo un numero limitato di risultati.
- * 
+ *
  */
 
 import * as Utils from "./utils.js";
@@ -126,9 +125,6 @@ async function searchAnimeByName(name) {
 
 // url di base
 const jikanBaseUrl = "https://api.jikan.moe/v4";
-// const animechanBaseUrl = "https://animechan.vercel.app/api";
-// ! new base url
-const animechanBaseUrl = "https://animechan.xyz/api";
 
 // serie tv, film, Original Video Animation, speciale, Original Net Animation, musica
 const validTypes = ["tv", "movie", "ova", "special", "ona", "music"];
@@ -147,7 +143,6 @@ const validFilters = ["airing", "upcoming", "bypopularity", "favorite"];
  * @param {string} [parameters.type] - The type of result to retrieve, if specified.
  * @param {string} [parameters.filter] - The filter to apply to the results, if specified.
  * @param {string} [parameters.q] - The name to search for, if specified.
- * @param {string} [parameters.title] - The title of the anime to search for, (only used with animechanBaseUrl). If specified.
  *
  * @returns {string} - The complete URL query as a string.
  *
@@ -177,12 +172,6 @@ function createUrlQuery(baseUrl, resourcePath, parameters = {}) {
     }
     if (q) {
       searchParams.set("q", q);
-    }
-  } else if (baseUrl === animechanBaseUrl) {
-    const { title } = validateParameters(baseUrl, parameters);
-
-    if (title) {
-      searchParams.set("title", title);
     }
   } else {
   }
@@ -237,16 +226,6 @@ function validateParameters(baseUrl, parameters) {
     );
 
     return { page, limit, type, filter, q };
-  } else if (baseUrl === animechanBaseUrl) {
-    const { title } = parameters;
-
-    if (title && typeof title !== "string") {
-      throw new Error(`Invalid title: ${title}`);
-    }
-
-    Utils.debug(`title (anime name): ${title}`);
-
-    return { title };
   } else {
     throw new Error(`Invalid baseUrl: ${baseUrl}`);
   }
@@ -278,9 +257,4 @@ async function makeHttpRequest(url) {
 }
 
 // Export the variables and functions for use in other modules.
-export {
-  MAX_LIMIT,
-  getTopAnimes,
-  getAnimeById,
-  searchAnimeByName,
-};
+export { MAX_LIMIT, getTopAnimes, getAnimeById, searchAnimeByName };
