@@ -1,139 +1,153 @@
-.card-img-top {
-  width: 100%;
-
-  /* height: 300px; */
-  height: 100%;
-
-  object-fit: cover;
+/* Global Styles */
+:root {
+  --primary-color: #6f42c1;
+  --secondary-color: #20c997;
+  --dark-color: #212529;
+  --light-color: #f8f9fa;
+  --transition-speed: 0.3s;
 }
 
-.card {
-  height: 100%;
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.card a {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+main {
+  flex: 1;
 }
 
-.card-body {
-  color: gray;
-  font-size: 14px;
-  text-align: center;
-  /* padding: 10px; */
-  padding: 0;
+/* Navbar */
+.navbar-brand {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Search Section */
+#search-form .input-group-text {
+  border-right: none;
+}
+
+#search-form .form-control {
+  border-left: none;
+}
+
+#search-form .form-control:focus {
+  box-shadow: none;
+}
+
+/* Filter Section */
+.btn-check:checked + .btn-outline-dark {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-group .btn {
+  margin: 2px;
+  border-radius: 4px !important;
+  flex-grow: 1;
+  transition: all var(--transition-speed);
+}
+
+/* Anime Cards */
+.clickable-card {
+  transition: transform var(--transition-speed),
+    box-shadow var(--transition-speed);
+  cursor: pointer;
+  height: 100%;
 }
 
 .clickable-card:hover {
-  cursor: pointer;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* responsive */
-
-.row-cols-1 > * {
-  flex: 1 0 100%;
-  max-width: 100%;
+.card img.card-img-top {
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
 }
 
-.row-cols-sm-2 > * {
-  flex-basis: calc(50% - 20px);
-  margin-right: 20px;
+.card .card-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.row-cols-md-3 > * {
-  flex-basis: calc(33.33% - 20px);
-  margin-right: 20px;
+.card .card-text {
+  margin-bottom: 0;
+  font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
-.row-cols-lg-5 > * {
-  flex-basis: calc(20% - 20px);
-  margin-right: 20px;
+/* Load More Button */
+#load-more-btn {
+  padding: 0.5rem 2rem;
+  transition: all var(--transition-speed);
 }
 
-@media (max-width: 576px) {
-  .row-cols-sm-2 > * {
-    flex-basis: 100%;
-    margin-right: 0;
+#load-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#load-more-btn:disabled {
+  transform: none;
+  box-shadow: none;
+  opacity: 0.65;
+}
+
+/* Footer */
+footer {
+  margin-top: auto;
+}
+
+footer a {
+  text-decoration: none;
+  transition: opacity var(--transition-speed);
+}
+
+footer a:hover {
+  opacity: 0.8;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+  .card img.card-img-top {
+    height: 200px;
   }
 
-  .row-cols-md-3 > * {
-    flex-basis: 50%;
-    margin-right: 20px;
-  }
-
-  .row-cols-lg-5 > * {
-    flex-basis: calc(33.33% - 20px);
-    margin-right: 20px;
+  .btn-group {
+    flex-wrap: wrap;
   }
 }
 
-@media (max-width: 768px) {
-  .row-cols-md-3 > * {
-    flex-basis: 100%;
-    margin-right: 0;
-  }
-
-  .row-cols-lg-5 > * {
-    flex-basis: 50%;
-    margin-right: 20px;
-  }
+/* GitHub Icon Enhancement */
+.github-link {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-speed);
+  margin-left: 10px;
 }
 
-@media (max-width: 992px) {
-  .row-cols-lg-5 > * {
-    flex-basis: 100%;
-    margin-right: 0;
-  }
+.github-link:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
 }
 
-/* navbar */
-
-.navbar {
-  background-color: #343a40;
-  padding: 0.5rem;
-}
-
-.navbar-brand {
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.nav-link {
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.btn-group {
-  flex-wrap: wrap;
-}
-
-.btn {
-  font-weight: bold;
-  margin-right: 0.5rem;
-  margin-bottom: 0.1em;
-}
-
-.form-control {
-  /* font-size: 1rem; */
-
-  font-size: 1rem;
-  /* adjust the top and bottom padding to match the button height */
-  padding: 0.5rem 0.75rem;
-  height: 100%;
-}
-
-/* Add some padding to the top of the section */
-section {
-  padding-top: 50px; /* Adjust this value as needed */
-}
-
-/* Add some margin to the top of the quote text */
-#anime-quote-text {
-  margin-top: 20px; /* Adjust this value as needed */
+.github-link i {
+  color: white;
 }

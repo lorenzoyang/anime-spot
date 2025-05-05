@@ -1,92 +1,110 @@
-.modal-header {
-  background-color: #6c757d;
-  color: #fff;
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
-  font-size: 24px;
+/* Modal Styles */
+.modal-dialog {
+  max-width: 90%;
+}
 
-  text-align: center; /* center align the text */
-  padding: 10px; /* add some padding to the header */
+@media (min-width: 1200px) {
+  .modal-dialog {
+    max-width: 1000px;
+  }
+}
+
+.modal-content {
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.modal-header,
+.modal-footer {
+  border-color: #eee;
 }
 
 .modal-title {
-  font-size: 24px;
-  line-height: 1.5;
-  margin-bottom: 10px;
-}
-
-.modal-body {
-  padding: 20px;
-  font-family: "Roboto", sans-serif;
-  font-size: 16px;
-  color: #333;
-}
-
-.modal-body p {
-  font-size: 16px;
-}
-
-#modal-genres li {
-  display: inline-block;
-  margin-right: 10px;
-  margin-bottom: 5px;
-  padding: 5px 10px;
-  background-color: #f0ad4e;
-  border-radius: 5px;
-  font-size: 14px;
   font-weight: bold;
-  color: #fff;
-  /* add left padding for indentation */
-  /* padding-left: 20px; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #modal-image {
-  margin-bottom: 10px;
-  border-radius: 5px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
 }
 
-.modal-dialog {
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+#modal-image:hover {
+  transform: scale(1.02);
 }
 
-.list-unstyled {
-  padding: 0;
+.anime-info {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+}
+
+#modal-synopsis {
+  line-height: 1.6;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Custom scrollbar for synopsis */
+#modal-synopsis::-webkit-scrollbar {
+  width: 6px;
+}
+
+#modal-synopsis::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+#modal-synopsis::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+#modal-synopsis::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* Genre list styling */
+#modal-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+#modal-genres li {
+  background-color: #eee;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
   margin: 0;
-  list-style: none;
-}
-
-.list-unstyled li {
-  margin-bottom: 10px;
-}
-
-.list-unstyled li a {
   display: inline-block;
-  padding: 5px;
-  border-radius: 5px;
-  background-color: #f1f1f1;
-  color: #333;
-  text-decoration: none;
-  font-weight: bold;
-
-  transition: all 0.2s ease-in-out; /* add transition for smooth hover effect */
-  border: 2px solid #333;
 }
 
-.list-unstyled li a:hover {
-  background-color: #333;
-  color: #fff;
+/* Watch links styling */
+#modal-watch-links li {
+  margin-bottom: 8px;
+}
 
+#modal-watch-links a {
+  color: #6f42c1;
+  text-decoration: none;
+  transition: color 0.2s;
+  display: inline-block;
+}
+
+#modal-watch-links a:hover {
+  color: #5a32a3;
   text-decoration: underline;
 }
 
-.list-inline li {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-/* font */
-body {
-  font-family: "Roboto", sans-serif;
-  font-size: 16px;
-  color: #333;
+#modal-watch-links a:before {
+  content: "▶ ";
+  font-size: 0.8em;
 }
