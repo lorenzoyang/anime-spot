@@ -1,7 +1,7 @@
 import * as AnimeContainer from "./modules/anime-container.js";
 import * as Homepage from "./modules/homepage.js";
-import * as ModalWindow from "./modules/modalWIndow.js";
-import * as SearchBar from "./modules/searchBar.js";
+import * as ModalWindow from "./modules/modal-window.js";
+import * as SearchBar from "./modules/search-bar.js";
 
 // * ====================================================================================================
 // * Set up the AnimeContainer with these templates and callbacks.
