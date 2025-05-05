@@ -27,10 +27,14 @@ window.addEventListener("load", Homepage.initHomepage);
 
 // Update anime cards when radio buttons are selected.
 for (const key in Homepage.radioBtns) {
-  Homepage.radioBtns[key].addEventListener(
-    "change",
-    Homepage.updateAnimeCardsOnRadioBtn
-  );
+  Homepage.radioBtns[key].addEventListener("change", () => {
+    // Clear search box when a filter is selected
+    searchBar.value = "";
+    // Set submited to false to indicate that the search form has not been submitted, so there will not be any search results to display.
+    submited = false;
+    loadMoreBtn.disabled = false;
+    Homepage.updateAnimeCardsOnRadioBtn();
+  });
 }
 
 // Expand anime cards when "Load More" button is clicked.
@@ -55,6 +59,11 @@ searchForm.addEventListener("submit", async (e) => {
 
   loadMoreBtn.disabled = true;
 
+  // Deselect all radio buttons when showing search results
+  for (const key in Homepage.radioBtns) {
+    Homepage.radioBtns[key].checked = false;
+  }
+
   AnimeContainer.displayAnimeCards(
     await SearchBar.getAnimeSearchResults(searchBar)
   );
@@ -68,6 +77,8 @@ searchBar.addEventListener("input", () => {
     if (searchBar.value === "") {
       submited = false;
       loadMoreBtn.disabled = false;
+      // Set the default radio button to "airing" when the search bar is empty
+      Homepage.radioBtns.airing.checked = true;
       Homepage.updateAnimeCardsOnRadioBtn();
     }
   }
