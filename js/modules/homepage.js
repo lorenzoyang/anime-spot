@@ -125,9 +125,23 @@ async function lazyLoadAnimeList(filter) {
  * @returns {Promise<void>}
  */
 async function updateAnimeCardsOnRadioBtn() {
+  // Show loading spinner when changing filters
+  document.getElementById("loading-spinner").style.display = "block";
+  // Hide the anime list container while loading
+  document.getElementById("anime-list-container").style.display = "none";
+  // Disable the "Load More" button while loading
+  document.getElementById("load-more-btn").disabled = true;
+
   let filter = getRadioBtnSelection(radioBtns);
   await lazyLoadAnimeList(filter);
   AnimeContainer.displayAnimeCards(animeCache[filter].animeList);
+
+  // Hide loading spinner and show anime container once data is loaded and displayed
+  document.getElementById("loading-spinner").style.display = "none";
+  document.getElementById("anime-list-container").style.display = "";
+
+  // Re-enable the "Load More" button after loading completes
+  document.getElementById("load-more-btn").disabled = false;
 }
 
 /**
