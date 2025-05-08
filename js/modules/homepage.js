@@ -91,12 +91,16 @@ const animeCache = {
 async function initHomepage() {
   // Show loading spinner (it's already visible by default)
   document.getElementById("loading-spinner").style.display = "block";
+  // Disable the "Load More" button while loading
+  document.getElementById("load-more-btn").disabled = true;
 
   await lazyLoadAnimeList("airing");
   AnimeContainer.displayAnimeCards(animeCache.airing.animeList);
 
   // Hide loading spinner once data is loaded and displayed
   document.getElementById("loading-spinner").style.display = "none";
+  // Re-enable the "Load More" button after loading completes
+  document.getElementById("load-more-btn").disabled = false;
 }
 
 /**
