@@ -7,6 +7,45 @@
       name="description"
       content="Anime Spot - Find information about your favorite anime"
     />
+
+    <!-- Basic SEO metadata -->
+    <meta
+      name="description"
+      content="AnimeSpot - The ultimate platform to find and explore your favorite anime shows. Get ratings, reviews, streaming links, and more."
+    />
+    <meta
+      name="keywords"
+      content="anime, animespot, anime search, anime database, anime information, anime streaming"
+    />
+
+    <!-- Open Graph tags for social sharing -->
+    <meta property="og:title" content="AnimeSpot - Find Your Favorite Anime" />
+    <meta
+      property="og:description"
+      content="Discover, search and get information about thousands of anime titles."
+    />
+    <meta property="og:url" content="https://animespot.vercel.app/" />
+    <meta
+      property="og:image"
+      content="https://animespot.vercel.app/img/favicon.png"
+    />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="AnimeSpot - Find Your Favorite Anime" />
+    <meta
+      name="twitter:description"
+      content="Discover, search and get information about thousands of anime titles."
+    />
+    <meta
+      name="twitter:image"
+      content="https://animespot.vercel.app/img/favicon.png"
+    />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://animespot.vercel.app/" />
+
     <title>Anime Spot</title>
 
     <!-- Favicon -->
@@ -290,5 +329,29 @@
 
     <!-- Main JavaScript -->
     <script type="module" src="js/main.js"></script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AnimeSpot",
+        "url": "https://animespot.vercel.app/",
+        "description": "Find information about your favorite anime",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://animespot.vercel.app/?search={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
+    <script>
+      window.va =
+        window.va ||
+        function () {
+          (window.vaq = window.vaq || []).push(arguments);
+        };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
   </body>
 </html>
