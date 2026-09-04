@@ -88,30 +88,30 @@ async function animeModalContentCallback(anime) {
   // anime synopsis
   modalSynopsis.textContent = anime.synopsis;
 
-  // anime watch links
-  const fullAnime = await AnimeApi.getAnimeById(anime.mal_id, true);
-  fullAnime.streaming.forEach((watchLink) => {
-    const listItem = document.createElement("li");
-    const anchor = document.createElement("a");
+  // Show the available data without waiting for the streaming request.
+  modal.show();
 
-    anchor.href = watchLink.url;
-    anchor.textContent = watchLink.name;
+  try {
+    const fullAnime = await AnimeApi.getAnimeById(anime.mal_id, true);
+    fullAnime.streaming.forEach((watchLink) => {
+      const listItem = document.createElement("li");
+      const anchor = document.createElement("a");
 
-    listItem.appendChild(anchor);
-    modalWatchLinks.appendChild(listItem);
-  });
+      anchor.href = watchLink.url;
+      anchor.textContent = watchLink.name;
 
-  // ==================================================================
+      listItem.appendChild(anchor);
+      modalWatchLinks.appendChild(listItem);
+    });
+  } catch {
+    modalWatchLinks.innerHTML =
+      '<li class="text-danger">Streaming links are temporarily unavailable.</li>';
+  }
 
-  // to clear the genres list after the modal is closed
   modal._element.addEventListener("hidden.bs.modal", () => {
-    // to clear the genres list
     modalGenres.innerHTML = "";
-    // to clear the watch links list
     modalWatchLinks.innerHTML = "";
   });
-
-  modal.show();
 }
 
 // Export the variables and functions for use in other modules.

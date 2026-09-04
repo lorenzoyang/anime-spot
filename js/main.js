@@ -2,6 +2,7 @@ import * as AnimeContainer from "./modules/anime-container.js";
 import * as Homepage from "./modules/homepage.js";
 import * as ModalWindow from "./modules/modal-window.js";
 import * as SearchBar from "./modules/search-bar.js";
+import * as UiFeedback from "./modules/ui-feedback.js";
 
 // * ====================================================================================================
 // * Set up the AnimeContainer with these templates and callbacks.
@@ -30,7 +31,7 @@ for (const key in Homepage.radioBtns) {
   Homepage.radioBtns[key].addEventListener("change", () => {
     // Clear search box when a filter is selected
     searchBar.value = "";
-    // Set submited to false to indicate that the search form has not been submitted, so there will not be any search results to display.
+    // Set submited to false to indicate that the search form has not been submitted.
     submited = false;
     loadMoreBtn.disabled = false;
     Homepage.updateAnimeCardsOnRadioBtn();
@@ -57,18 +58,24 @@ let submited = false;
 searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  UiFeedback.hideError();
+  UiFeedback.setLoading(true);
   loadMoreBtn.disabled = true;
 
-  // Deselect all radio buttons when showing search results
-  for (const key in Homepage.radioBtns) {
-    Homepage.radioBtns[key].checked = false;
+  try {
+    const results = await SearchBar.getAnimeSearchResults(searchBar);
+
+    for (const key in Homepage.radioBtns) {
+      Homepage.radioBtns[key].checked = false;
+    }
+
+    AnimeContainer.displayAnimeCards(results);
+    submited = true;
+  } catch {
+    UiFeedback.showError(() => searchForm.requestSubmit());
+  } finally {
+    UiFeedback.setLoading(false);
   }
-
-  AnimeContainer.displayAnimeCards(
-    await SearchBar.getAnimeSearchResults(searchBar)
-  );
-
-  submited = true;
 });
 
 // When the search bar input changes, reset the anime cards on the homepage if the search form has been submitted and the search bar is empty.

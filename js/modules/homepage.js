@@ -6,6 +6,7 @@
 
 import * as AnimeApi from "./anime-api.js";
 import * as AnimeContainer from "./anime-container.js";
+import * as UiFeedback from "./ui-feedback.js";
 
 /**
  * Radio button object containing all radio buttons in the HTML
@@ -28,6 +29,9 @@ const radioBtns = {
   favorite: document.querySelector("#radio-favorite"),
   bypopularity: document.querySelector("#radio-popularity"),
 };
+
+const animeContainer = document.querySelector("#anime-list-container");
+const loadMoreButton = document.querySelector("#load-more-btn");
 
 /**
  * Returns the selected radio button from the given radio button object
@@ -81,26 +85,28 @@ const animeCache = {
   searchResult: { animeList: [] },
 };
 
-/**
- * Initializes the homepage by fetching the anime list for the "airing" category and displaying it on the page.
- *
- * @async
- *
- * @returns {Promise<void>} A Promise that resolves when the anime list has been fetched and displayed.
- */
+/** Loads a filter and takes care of its loading and error states. */
+async function loadAndDisplayAnimeList(filter) {
+  UiFeedback.hideError();
+  UiFeedback.setLoading(true);
+  animeContainer.style.display = "none";
+  loadMoreButton.disabled = true;
+
+  try {
+    await lazyLoadAnimeList(filter);
+    AnimeContainer.displayAnimeCards(animeCache[filter].animeList);
+    animeContainer.style.display = "";
+    loadMoreButton.disabled = !animeCache[filter].hasNextPage;
+  } catch {
+    UiFeedback.showError(() => loadAndDisplayAnimeList(filter));
+  } finally {
+    UiFeedback.setLoading(false);
+  }
+}
+
+/** Initializes the homepage with the "airing" category. */
 async function initHomepage() {
-  // Show loading spinner (it's already visible by default)
-  document.getElementById("loading-spinner").style.display = "block";
-  // Disable the "Load More" button while loading
-  document.getElementById("load-more-btn").disabled = true;
-
-  await lazyLoadAnimeList("airing");
-  AnimeContainer.displayAnimeCards(animeCache.airing.animeList);
-
-  // Hide loading spinner once data is loaded and displayed
-  document.getElementById("loading-spinner").style.display = "none";
-  // Re-enable the "Load More" button after loading completes
-  document.getElementById("load-more-btn").disabled = false;
+  await loadAndDisplayAnimeList("airing");
 }
 
 /**
@@ -129,23 +135,8 @@ async function lazyLoadAnimeList(filter) {
  * @returns {Promise<void>}
  */
 async function updateAnimeCardsOnRadioBtn() {
-  // Show loading spinner when changing filters
-  document.getElementById("loading-spinner").style.display = "block";
-  // Hide the anime list container while loading
-  document.getElementById("anime-list-container").style.display = "none";
-  // Disable the "Load More" button while loading
-  document.getElementById("load-more-btn").disabled = true;
-
-  let filter = getRadioBtnSelection(radioBtns);
-  await lazyLoadAnimeList(filter);
-  AnimeContainer.displayAnimeCards(animeCache[filter].animeList);
-
-  // Hide loading spinner and show anime container once data is loaded and displayed
-  document.getElementById("loading-spinner").style.display = "none";
-  document.getElementById("anime-list-container").style.display = "";
-
-  // Re-enable the "Load More" button after loading completes
-  document.getElementById("load-more-btn").disabled = false;
+  const filter = getRadioBtnSelection(radioBtns);
+  await loadAndDisplayAnimeList(filter);
 }
 
 /**
@@ -176,10 +167,20 @@ async function expandAnimeList(filter) {
  * @returns {Promise<void>} - A Promise that resolves when the anime cards are expanded and displayed.
  */
 async function expandAnimeCardsOnRadioBtn() {
-  let filter = getRadioBtnSelection(radioBtns);
+  const filter = getRadioBtnSelection(radioBtns);
   const oldLength = animeCache[filter].animeList.length;
-  await expandAnimeList(filter);
-  AnimeContainer.displayAnimeCards(animeCache[filter].animeList, oldLength);
+
+  UiFeedback.hideError();
+  loadMoreButton.disabled = true;
+
+  try {
+    await expandAnimeList(filter);
+    AnimeContainer.displayAnimeCards(animeCache[filter].animeList, oldLength);
+    loadMoreButton.disabled = !animeCache[filter].hasNextPage;
+  } catch {
+    UiFeedback.showError(expandAnimeCardsOnRadioBtn);
+    loadMoreButton.disabled = false;
+  }
 }
 
 // * ====================================================================================================

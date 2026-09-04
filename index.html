@@ -121,6 +121,7 @@
               id="search-bar"
               placeholder="Search anime..."
               autocomplete="off"
+              required
             />
           </div>
           <button type="submit" class="btn btn-primary">Search</button>
@@ -190,6 +191,19 @@
           <span class="visually-hidden">Loading...</span>
         </div>
         <p class="mt-2">Loading anime list...</p>
+      </section>
+
+      <!-- Error feedback -->
+      <section
+        id="error-alert"
+        class="alert alert-danger text-center d-none"
+        role="alert"
+        aria-live="assertive"
+      >
+        <p id="error-text">Anime data could not be loaded.</p>
+        <button id="retry-btn" type="button" class="btn btn-outline-danger">
+          Try Again
+        </button>
       </section>
 
       <!-- Anime Grid Section -->
